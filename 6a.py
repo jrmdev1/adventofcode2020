@@ -28,7 +28,7 @@ for b in b_list:
         if chr(i) in b:
             print(f"x={x}")
             letters[x] = 1
-    for x in range(0, 26):
+    for x in range(0, 27):
         #print(f"x={x}")
         if letters[x] != 0:
             count = count + 1
