@@ -23,7 +23,8 @@ print(f"maxindex={maxindex}, maxcolumns={len(a_list[0])}")
 # can make an initial test case parsing and finding the top level holders of shiny gold.
 tree = Tree()
 tree.create_node("root", "root")    # create root, (tag, identifier)
-tree.create_node("shiny gold", "shiny gold", parent="root")    # create root, (tag, identifier)
+#tree.create_node("noparent", "noparent",parent="root")
+#tree.create_node("shiny gold", "shiny gold", parent="root")    # create root, (tag, identifier)
 tree.show()
 
 for line in a_list:
@@ -50,12 +51,29 @@ for line in a_list:
             print(f"child={child}")
             child_list.append(child)
 
+    # if new, create parent node (parent of root temporarily.)
+    # if not new, use it.
+    # then similar for children.
+    if not tree.contains(par):
+        # new so create the parent (and make its parent root temporarily OR leave it as None for now???)
+        tree.create_node(par, par, parent="root")
     for child in child_list:
-        if tree.contains(par):
+        if not tree.contains(child):
             tree.create_node(child, child, parent=par)
         else:
-            # add to root until we can find its true parent (later)
-            tree.create_node(child, child, parent="root")
+            # reparent the child, since child already exists (assert that parent was previously root)
+            #tree.create_node(child, child, parent="root")
+            #node = tree.get_node(child)
+            prev_par = tree.parent(child)
+            print(f"!!! previous parent = {prev_par} !!!")
+            tree.move_node(child, par)
+    
+    # for child in child_list:
+    #     if tree.contains(par):
+    #         tree.create_node(child, child, parent=par)
+    #     else:
+    #         # add to root until we can find its true parent (later)
+    #         tree.create_node(child, child, parent="root")
     
     tree.show()
 
