@@ -26,9 +26,9 @@ tree.create_node("root", "root")    # create root, (tag, identifier)
 tree.create_node("shiny gold", "shiny gold", parent="root")    # create root, (tag, identifier)
 tree.show()
 
-for b in a_list:
+for line in a_list:
     # TODO: parse the comma(s) afterwards for other groups!
-    m = re.match(r"(\w+ \w+) (?:bags) (?:contain) (\w+) (\w+ \w+) (?:bags*)", b)
+    m = re.match(r"(\w+ \w+) (?:bags) (?:contain) (\w+) (\w+ \w+) (?:bags*)", line)
     # grpall = m.group(0)
     # print(f"{grpall}")  # string
     print(f"{m.groups()}")    # string in groups, indexed 1 and up.
@@ -37,10 +37,10 @@ for b in a_list:
     par = m.group(3)
     child_list = []
     child_list.append(child)
-    cnt_other = b.count(',')
+    cnt_other = line.count(',')
     print(f"cnt_other={cnt_other}")
     if cnt_other > 0:
-        remain_list = b.split(", ")
+        remain_list = line.split(", ")
         remain_list.pop(0)    # drop already processed child and parent string entry
         print(f"remain_list={remain_list}")
         for i in range(0, cnt_other):
