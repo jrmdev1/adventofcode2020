@@ -1,5 +1,5 @@
 #Advent of code
-# 06/15/21 day8 8a
+# 06/16/21 day8 8b
 #import re
 
 filename = "data8.txt"
@@ -12,7 +12,7 @@ print(f"maxindex={maxindex}, maxcolumns={len(a_list[0])}")
 
 acc = 0
 pc = 0
-hasrun_list = [0] * maxindex
+hasrun_list = [0] * (maxindex)
 
 while pc >= 0:
     if hasrun_list[pc] != 0:
@@ -31,11 +31,17 @@ while pc >= 0:
     elif oper == "jmp":
         pc += arg_int
         print(f"jmp {arg_int}, new pc = {pc}")
+        if pc >= maxindex:
+            print(f"pc exceeded program length due to jmp")
+            break
         continue        # start processing at new pc, dont increment
     else:
         print(f"ERROR: syntax {line}")
         break
-    pc += 1
+    pc += 1         # won't run for a jmp
+    if pc >= maxindex:
+        print(f"executing past last instruction. program complete")
+        break
         
 print(f"final pc = {pc}, acc = {acc}")
 
