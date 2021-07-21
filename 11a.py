@@ -1,8 +1,5 @@
 #Advent of code 2020
 # 07/20/21 day 11a
-#import re
-
-
 filename = "data11_short.txt"
 
 file = open(filename)
@@ -24,7 +21,7 @@ def notOccupied( r, c ):
     global matrix
     global maxrows
     global maxcolumns
-    #print(f"r={r},c={c}")
+    print(f"r={r},c={c}")
     if r < 0 or r >= maxrows or c < 0 or c >= maxcolumns:
         return True  # skip it, it is okay, even if bounds exceeded.
     if matrix[r][c] == "#":  # can be either empty, or floor.
@@ -57,14 +54,14 @@ def Occupied( r, c ):
     else:
         return False # cannot be floor, or empty
 
-def check4OrMoreOccupied( r, c ):
+def check4orMoreOccupied( r, c ):
     global matrix
     global maxrows
     global maxcolumns
     count = 0
     for ri in range(-1, 2):
         for ci in range(-1, 2):
-            if Occupied(ri,ci):
+            if Occupied(r + ri, c + ci):
                 count += 1
     # middle seat must be occupied, so assume count of 5 or greater.
     if Occupied(r,c) and count >= 5:
@@ -72,11 +69,14 @@ def check4OrMoreOccupied( r, c ):
     else:
         return False
 
+changedmatrix = matrix
 needExit = False
+passNum = 0
 #while not needExit:
 for j in range(0,2):    # run just once or twice for test.
-    print(f"New Pass:")
-    prev_list = matrix    #TODO: NEED TO RUN ON THE PREVIOUS MATRIX!
+    print(f"New Pass #{passNum}:")
+    passNum += 1
+    #prev_list = matrix    #TODO: NEED TO RUN ON THE PREVIOUS MATRIX!
     for r, row in enumerate(matrix):
         print(f"row: {row}")
         #row_id = 0
@@ -85,15 +85,21 @@ for j in range(0,2):    # run just once or twice for test.
                 continue
             elif char == "L":    # empty, check around it.
                 if checkNoOccupiedSeatsAround( r, c ):
-                    matrix[r][c] = "#"
+                    changedmatrix[r][c] = "#"
             elif char == "#":    # occupied, check around it.
-                if check4OrMoreOccupied( r, c ):
-                    matrix[r][c] = "L"
+                if check4orMoreOccupied( r, c ):
+                    changedmatrix[r][c] = "L"
             else:
                 print(f"INVALID CHAR!")
                 needExit = True
                 break
         if needExit:
             break
-
-
+    
+    if matrix == changedmatrix:
+        print(f"NO Changes. Pass complete!")
+        print(f"{matrix}")
+        needExit = True
+    #else:
+    matrix = changedmatrix
+    print(f"Copied matrix from changedmatrix")
