@@ -1,5 +1,7 @@
 #Advent of code 2020
 # 07/20/21 day 11a
+import copy
+
 filename = "data11_short.txt"
 
 file = open(filename)
@@ -7,13 +9,13 @@ filestr = file.read()
 a_list = filestr.split("\n")
 maxrows = len(a_list)
 maxcolumns = len(a_list[0])
-print(a_list)
+#print(a_list)
 print(f"maxrows={maxrows}, maxcolumns={maxcolumns}")
 #make 2d array
 matrix = []
 for i in range(maxrows):
     matrix.append( list(a_list[i]))
-print(f"2d:\n{matrix}")
+#print(f"2d:\n{matrix}")
 
 # If a seat is empty (L) and 
 # there are no occupied seats adjacent to it, the seat becomes occupied
@@ -21,10 +23,10 @@ def notOccupied( r, c ):
     global matrix
     global maxrows
     global maxcolumns
-    print(f"r={r},c={c}")
+    #print(f"r={r},c={c}")
     if (r < 0) or (r >= maxrows) or (c < 0) or (c >= maxcolumns):
         return True  # skip it, it is okay, even if bounds exceeded.
-    print(f"val={matrix[r][c]}")
+    #print(f"val={matrix[r][c]}")
     if matrix[r][c] == "#":  # can be either empty, or floor.
         return False
     return True
@@ -33,7 +35,7 @@ def checkNoOccupiedSeatsAround( r, c ):
     global matrix
     global maxrows
     global maxcolumns
-    print(f"check around {r}, {c}")
+    #print(f"check around {r}, {c}")
     # CAREFUL, will skip rest of checks if one returns FALSE
     if notOccupied(r-1,c-1) and notOccupied(r-1,c) and notOccupied(r-1,c+1) and \
         notOccupied(r,c-1) and notOccupied(r,c+1) and \
@@ -71,20 +73,30 @@ def check4orMoreOccupied( r, c ):
         return True
     else:
         return False
-
-changedmatrix = matrix
+  
+def countOccupied():
+    global matrix
+    cnt = 0
+    for row in matrix:
+        for char in row:
+            if char == "#":
+                cnt +=1
+    return cnt
+    
+changedmatrix = copy.deepcopy(matrix)
+#print(f"matrix={matrix}")
+#print(f"changedmatrix={changedmatrix}")
 needExit = False
 passNum = 0
-#while not needExit:
-for j in range(0,1):    # run just once or twice for test.
-    print(f"New Pass #{passNum}:")
+while not needExit:
+#for j in range(0,2):    # run just once or twice for test.
+    print(f"Pass #{passNum}:")
     passNum += 1
-    #prev_list = matrix    #TODO: NEED TO RUN ON THE PREVIOUS MATRIX!
     for r, row in enumerate(matrix):
         print(f"row: {row}")
         #row_id = 0
         for c, char in enumerate(row):
-            print(f"c={c}, char={char}")
+            #print(f"c={c}, char={char}")
             if char == ".":   #floor, skip it
                 continue
             elif char == "L":    # empty, check around it.
@@ -103,7 +115,9 @@ for j in range(0,1):    # run just once or twice for test.
     if matrix == changedmatrix:
         print(f"NO Changes. Pass complete!")
         print(f"{matrix}")
+        cnt = countOccupied()
+        print(f"Num occupied = {cnt}")
         needExit = True
-    #else:
-    matrix = changedmatrix
-    print(f"Copied matrix from changedmatrix")
+    else:
+        matrix = copy.deepcopy(changedmatrix)
+        print(f"Copied matrix from changedmatrix")
