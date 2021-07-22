@@ -22,8 +22,9 @@ def notOccupied( r, c ):
     global maxrows
     global maxcolumns
     print(f"r={r},c={c}")
-    if r < 0 or r >= maxrows or c < 0 or c >= maxcolumns:
+    if (r < 0) or (r >= maxrows) or (c < 0) or (c >= maxcolumns):
         return True  # skip it, it is okay, even if bounds exceeded.
+    print(f"val={matrix[r][c]}")
     if matrix[r][c] == "#":  # can be either empty, or floor.
         return False
     return True
@@ -32,6 +33,7 @@ def checkNoOccupiedSeatsAround( r, c ):
     global matrix
     global maxrows
     global maxcolumns
+    print(f"check {r}, {c}")
     if notOccupied(r-1,c-1) and notOccupied(r-1,c) and notOccupied(r-1,c+1) and \
         notOccupied(r,c-1) and notOccupied(r,c+1) and \
         notOccupied(r+1,c-1) and notOccupied(r+1,c) and notOccupied(r+1,c+1):
@@ -73,7 +75,7 @@ changedmatrix = matrix
 needExit = False
 passNum = 0
 #while not needExit:
-for j in range(0,2):    # run just once or twice for test.
+for j in range(0,1):    # run just once or twice for test.
     print(f"New Pass #{passNum}:")
     passNum += 1
     #prev_list = matrix    #TODO: NEED TO RUN ON THE PREVIOUS MATRIX!
@@ -81,6 +83,7 @@ for j in range(0,2):    # run just once or twice for test.
         print(f"row: {row}")
         #row_id = 0
         for c, char in enumerate(row):
+            print(f"c={c}, char={char}")
             if char == ".":   #floor, skip it
                 continue
             elif char == "L":    # empty, check around it.
