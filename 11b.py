@@ -17,34 +17,6 @@ for i in range(maxrows):
     matrix.append( list(a_list[i]))
 #print(f"2d:\n{matrix}")
 
-# If a seat is empty (L) and 
-# there are no occupied seats adjacent to it, the seat becomes occupied
-def notOccupied( r, c ):
-    global matrix
-    global maxrows
-    global maxcolumns
-    #print(f"r={r},c={c}")
-    if (r < 0) or (r >= maxrows) or (c < 0) or (c >= maxcolumns):
-        return True  # skip it, it is okay, even if bounds exceeded.
-    #print(f"val={matrix[r][c]}")
-    if matrix[r][c] == "#":  # can be either empty, or floor.
-        return False
-    return True
-
-def checkNoOccupiedSeatsAround( r, c ):
-    global matrix
-    #print(f"check around {r}, {c}")
-    # CAREFUL, will skip rest of checks if one returns FALSE
-    if notOccupied(r-1,c-1) and notOccupied(r-1,c) and notOccupied(r-1,c+1) and \
-        notOccupied(r,c-1) and notOccupied(r,c+1) and \
-        notOccupied(r+1,c-1) and notOccupied(r+1,c) and notOccupied(r+1,c+1):
-        return True
-    else:
-        return False
-
-# If a seat is occupied (#) and four or more seats adjacent to it are also occupied, 
-# the seat becomes empty (L)
-# Otherwise, the seat's state does not change.
 def Occupied( r, c ):
     global matrix
     global maxrows
@@ -57,6 +29,22 @@ def Occupied( r, c ):
     else:
         return False # cannot be floor, or empty
 
+# If a seat is empty (L) and 
+# there are no occupied seats adjacent to it, the seat becomes occupied
+def checkNoOccupiedSeatsAround( r, c ):
+    global matrix
+    #print(f"check around {r}, {c}")
+    # CAREFUL, will skip rest of checks if one returns FALSE
+    if not Occupied(r-1,c-1) and not Occupied(r-1,c) and not Occupied(r-1,c+1) and \
+        not Occupied(r,c-1) and not Occupied(r,c+1) and \
+        not Occupied(r+1,c-1) and not Occupied(r+1,c) and not Occupied(r+1,c+1):
+        return True
+    else:
+        return False
+
+# If a seat is occupied (#) and four or more seats adjacent to it are also occupied, 
+# the seat becomes empty (L)
+# Otherwise, the seat's state does not change.
 def check4orMoreOccupied( r, c ):
     global matrix
     count = 0
