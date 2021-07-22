@@ -2,7 +2,7 @@
 # 07/20/21 day 11a
 import copy
 
-filename = "data11_short.txt"
+filename = "data11.txt"
 
 file = open(filename)
 filestr = file.read()
