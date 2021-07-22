@@ -33,7 +33,8 @@ def checkNoOccupiedSeatsAround( r, c ):
     global matrix
     global maxrows
     global maxcolumns
-    print(f"check {r}, {c}")
+    print(f"check around {r}, {c}")
+    # CAREFUL, will skip rest of checks if one returns FALSE
     if notOccupied(r-1,c-1) and notOccupied(r-1,c) and notOccupied(r-1,c+1) and \
         notOccupied(r,c-1) and notOccupied(r,c+1) and \
         notOccupied(r+1,c-1) and notOccupied(r+1,c) and notOccupied(r+1,c+1):
