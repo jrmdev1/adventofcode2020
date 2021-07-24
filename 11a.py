@@ -34,13 +34,13 @@ def Occupied( r, c ):
 def checkNoOccupiedSeatsAround( r, c ):
     global matrix
     #print(f"check around {r}, {c}")
-    # CAREFUL, will skip rest of checks if one returns FALSE
-    if not Occupied(r-1,c-1) and not Occupied(r-1,c) and not Occupied(r-1,c+1) and \
-        not Occupied(r,c-1) and not Occupied(r,c+1) and \
-        not Occupied(r+1,c-1) and not Occupied(r+1,c) and not Occupied(r+1,c+1):
-        return True
-    else:
-        return False
+    for ri in range(-1,2):
+        for ci in range(-1,2):
+            if ri==0 and ci==0:
+                continue
+            if Occupied(r+ri, c+ci):
+                return False 
+    return True
 
 # If a seat is occupied (#) and four or more seats adjacent to it are also occupied, 
 # the seat becomes empty (L)
