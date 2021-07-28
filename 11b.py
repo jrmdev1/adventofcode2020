@@ -2,7 +2,7 @@
 # 07/22/21 day 11b
 import copy
 
-filename = "data11_short.txt"
+filename = "data11_short2.txt"
 
 file = open(filename)
 filestr = file.read()
@@ -29,6 +29,18 @@ def Occupied( r, c ):
     else:
         return False # cannot be floor, or empty
 
+def Empty( r, c ):
+    global matrix
+    global maxrows
+    global maxcolumns
+    #print(f"r={r},c={c}")
+    if r < 0 or r >= maxrows or c < 0 or c >= maxcolumns:
+        return True  # if exceeds bounds, then EMPTY.
+    if matrix[r][c] == "L": 
+        return True
+    else:
+        return False
+
 # If a seat is empty (L) and 
 # there are no occupied seats adjacent to it, the seat becomes occupied
 def checkNoOccupiedSeatsAround( r, c ):
@@ -47,34 +59,50 @@ def checkNoOccupiedSeatsAround( r, c ):
                 for c_arrow in range( c+ci, -1, -1): # neg step and stop at 0.
                     if Occupied(r+ri, c_arrow):
                         return False
+                    elif Empty(r+ri, c_arrow):
+                        break
             elif ri == 0 and ci == 1:
                 for c_arrow in range( c+ci, maxcolumns): # 
                     if Occupied(r+ri, c_arrow):
                         return False
+                    elif Empty(r+ri, c_arrow):
+                        break
             elif ri == -1 and ci == 0:
                 for r_arrow in range( r+ri, -1, -1): # 
                     if Occupied(r_arrow, c+ci):
                         return False
+                    elif Empty(r_arrow, c+ci):
+                        break
             elif ri == 1 and ci == 0:
                 for r_arrow in range( r+ri, maxrows): # 
                     if Occupied(r_arrow, c+ci):
                         return False
+                    elif Empty(r_arrow, c+ci):
+                        break
             elif ri == 1 and ci == 1:
                 for offset in range( 0, max(maxrows,maxcolumns) ): # 
                     if Occupied(r+ri+offset, c+ci+offset):
                         return False
+                    elif Empty(r+ri+offset, c+ci+offset):
+                        break
             elif ri == -1 and ci == -1:
                 for offset in range( 0, -1, -1): # 
                     if Occupied(r+ri+offset, c+ci+offset):
                         return False
+                    elif Empty(r+ri+offset, c+ci+offset):
+                        break
             elif ri == -1 and ci == 1:
                 for offset in range( 0, max(maxrows,maxcolumns)): # 
                     if Occupied(r+ri-offset, c+ci+offset):
                         return False
+                    elif Empty(r+ri-offset, c+ci+offset):
+                        break
             elif ri == 1 and ci == -1:
                 for offset in range( 0, max(maxrows,maxcolumns)): # 
                     if Occupied(r+ri+offset, c+ci-offset):
                         return False
+                    elif Empty(r+ri+offset, c+ci-offset):
+                        break
     return True
 
 # If a seat is occupied (#) and five or more seats adjacent to it are also occupied, 
@@ -85,7 +113,7 @@ def check5orMoreOccupied( r, c ):
     global maxrows
     global maxcolumns
     count = 0
-    print(f"check 5+ occ around {r}, {c}")
+    ###print(f"check 5+ occ around {r}, {c}")
     if not Occupied(r,c):    # middle seat must be occupied!
         return False
     for ri in range(-1, 2):
@@ -126,6 +154,7 @@ def check5orMoreOccupied( r, c ):
                 for offset in range( 0, max(maxrows,maxcolumns)): # 
                     if Occupied(r+ri+offset, c+ci-offset):
                         count += 1
+            print(f"check 5+ occ around {r}, {c}, occ count = {count}")
             if count >= 5:
                 return True
             
