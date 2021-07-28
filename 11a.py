@@ -52,10 +52,12 @@ def check4orMoreOccupied( r, c ):
         return False
     for ri in range(-1, 2):
         for ci in range(-1, 2):
+            if ri==0 and ci==0:
+                continue
             if Occupied(r + ri, c + ci):
                 count += 1
-                # middle seat must be occupied, so assume count of 5 or greater.
-                if count >= 5:
+                # middle seat must be occupied, so assume count of 4 or greater.
+                if count >= 4:
                     #Can exit early, if already at count check.
                     return True
     return False

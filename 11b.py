@@ -33,32 +33,109 @@ def Occupied( r, c ):
 # there are no occupied seats adjacent to it, the seat becomes occupied
 def checkNoOccupiedSeatsAround( r, c ):
     global matrix
-    #print(f"check around {r}, {c}")
+    global maxrows
+    global maxcolumns
+    #print(f"check no occ around {r}, {c}")
     # will skip rest of checks if one returns FALSE
     for ri in range(-1,2):
         for ci in range(-1,2):
             if ri==0 and ci==0:
                 continue
-            if Occupied(r+ri, c+ci):
-                return False 
+            # -1,-1 -1,0 -1,1 0,-1 0,0 0,1 1,-1 1,0 1,1
+            if ri == 0 and ci == -1:
+                # scan back to limit
+                for c_arrow in range( c+ci, -1, -1): # neg step and stop at 0.
+                    if Occupied(r+ri, c_arrow):
+                        return False
+            elif ri == 0 and ci == 1:
+                for c_arrow in range( c+ci, maxcolumns): # 
+                    if Occupied(r+ri, c_arrow):
+                        return False
+            elif ri == -1 and ci == 0:
+                for r_arrow in range( r+ri, -1, -1): # 
+                    if Occupied(r_arrow, c+ci):
+                        return False
+            elif ri == 1 and ci == 0:
+                for r_arrow in range( r+ri, maxrows): # 
+                    if Occupied(r_arrow, c+ci):
+                        return False
+            elif ri == 1 and ci == 1:
+                for offset in range( 0, max(maxrows,maxcolumns) ): # 
+                    if Occupied(r+ri+offset, c+ci+offset):
+                        return False
+            elif ri == -1 and ci == -1:
+                for offset in range( 0, -1, -1): # 
+                    if Occupied(r+ri+offset, c+ci+offset):
+                        return False
+            elif ri == -1 and ci == 1:
+                for offset in range( 0, max(maxrows,maxcolumns)): # 
+                    if Occupied(r+ri-offset, c+ci+offset):
+                        return False
+            elif ri == 1 and ci == -1:
+                for offset in range( 0, max(maxrows,maxcolumns)): # 
+                    if Occupied(r+ri+offset, c+ci-offset):
+                        return False
     return True
 
-# If a seat is occupied (#) and four or more seats adjacent to it are also occupied, 
+# If a seat is occupied (#) and five or more seats adjacent to it are also occupied, 
 # the seat becomes empty (L)
 # Otherwise, the seat's state does not change.
-def check4orMoreOccupied( r, c ):
+def check5orMoreOccupied( r, c ):
     global matrix
+    global maxrows
+    global maxcolumns
     count = 0
+    print(f"check 5+ occ around {r}, {c}")
     if not Occupied(r,c):    # middle seat must be occupied!
         return False
     for ri in range(-1, 2):
         for ci in range(-1, 2):
-            if Occupied(r + ri, c + ci):
-                count += 1
-                # middle seat must be occupied, so assume count of 5 or greater.
-                if count >= 5:
-                    #Can exit early, if already at count check.
-                    return True
+            if ri==0 and ci==0:
+                continue
+            # -1,-1 -1,0 -1,1 0,-1 0,0 0,1 1,-1 1,0 1,1
+            if ri == 0 and ci == -1:
+                # scan back to limit
+                for c_arrow in range( c+ci, -1, -1): # neg step and stop at 0.
+                    if Occupied(r+ri, c_arrow):
+                        count += 1
+            elif ri == 0 and ci == 1:
+                for c_arrow in range( c+ci, maxcolumns): # 
+                    if Occupied(r+ri, c_arrow):
+                        count += 1
+            elif ri == -1 and ci == 0:
+                for r_arrow in range( r+ri, -1, -1): # 
+                    if Occupied(r_arrow, c+ci):
+                        count += 1
+            elif ri == 1 and ci == 0:
+                for r_arrow in range( r+ri, maxrows): # 
+                    if Occupied(r_arrow, c+ci):
+                        count += 1
+            elif ri == 1 and ci == 1:
+                for offset in range( 0, max(maxrows,maxcolumns) ): # 
+                    if Occupied(r+ri+offset, c+ci+offset):
+                        count += 1
+            elif ri == -1 and ci == -1:
+                for offset in range( 0, -1, -1): # 
+                    if Occupied(r+ri+offset, c+ci+offset):
+                        count += 1
+            elif ri == -1 and ci == 1:
+                for offset in range( 0, max(maxrows,maxcolumns)): # 
+                    if Occupied(r+ri-offset, c+ci+offset):
+                        count += 1
+            elif ri == 1 and ci == -1:
+                for offset in range( 0, max(maxrows,maxcolumns)): # 
+                    if Occupied(r+ri+offset, c+ci-offset):
+                        count += 1
+            if count >= 5:
+                return True
+            
+            #### TODO: OLD CODE!!!!! REMOVE!!!
+            # if Occupied(r + ri, c + ci):
+            #     count += 1
+            #     # middle seat must be occupied, so assume count of 5 or greater.
+            #     if count >= 5:
+            #         #Can exit early, if already at count check.
+            #         return True
     return False
   
 def countOccupied():
@@ -90,7 +167,7 @@ while not needExit:
                 if checkNoOccupiedSeatsAround( r, c ):
                     changedmatrix[r][c] = "#"
             elif char == "#":    # occupied, check around it.
-                if check4orMoreOccupied( r, c ):
+                if check5orMoreOccupied( r, c ):
                     changedmatrix[r][c] = "L"
             else:
                 print(f"INVALID CHAR!")
