@@ -2,7 +2,7 @@
 # 07/22/21 day 11b
 import copy
 
-filename = "data11_short2.txt"
+filename = "data11_short.txt"
 
 file = open(filename)
 filestr = file.read()
@@ -113,11 +113,13 @@ def check5orMoreOccupied( r, c ):
     global maxrows
     global maxcolumns
     count = 0
-    ###print(f"check 5+ occ around {r}, {c}")
+    if r==0 and c==3:
+        print(f"check 5+ occ around {r}, {c}")
     if not Occupied(r,c):    # middle seat must be occupied!
         return False
     for ri in range(-1, 2):
         for ci in range(-1, 2):
+            #count = 0
             if ri==0 and ci==0:
                 continue
             # -1,-1 -1,0 -1,1 0,-1 0,0 0,1 1,-1 1,0 1,1
@@ -126,36 +128,48 @@ def check5orMoreOccupied( r, c ):
                 for c_arrow in range( c+ci, -1, -1): # neg step and stop at 0.
                     if Occupied(r+ri, c_arrow):
                         count += 1
+                        break
             elif ri == 0 and ci == 1:
                 for c_arrow in range( c+ci, maxcolumns): # 
                     if Occupied(r+ri, c_arrow):
                         count += 1
+                        break
             elif ri == -1 and ci == 0:
                 for r_arrow in range( r+ri, -1, -1): # 
                     if Occupied(r_arrow, c+ci):
                         count += 1
+                        break
             elif ri == 1 and ci == 0:
                 for r_arrow in range( r+ri, maxrows): # 
                     if Occupied(r_arrow, c+ci):
                         count += 1
+                        break
             elif ri == 1 and ci == 1:
                 for offset in range( 0, max(maxrows,maxcolumns) ): # 
                     if Occupied(r+ri+offset, c+ci+offset):
                         count += 1
+                        break
             elif ri == -1 and ci == -1:
                 for offset in range( 0, -1, -1): # 
                     if Occupied(r+ri+offset, c+ci+offset):
                         count += 1
+                        break
             elif ri == -1 and ci == 1:
                 for offset in range( 0, max(maxrows,maxcolumns)): # 
                     if Occupied(r+ri-offset, c+ci+offset):
                         count += 1
+                        break
             elif ri == 1 and ci == -1:
                 for offset in range( 0, max(maxrows,maxcolumns)): # 
                     if Occupied(r+ri+offset, c+ci-offset):
                         count += 1
-            print(f"check 5+ occ around {r}, {c}, occ count = {count}")
+                        break
+            #print(f"check 5+ occ around {r}, {c}, occ count = {count}")
+            if r==0 and c==3:
+                print(f"rc {r},{c} ri={ri},ci={ci} count = {count}")
             if count >= 5:
+                if r==0 and c==3:
+                    print(f"Change {r},{c} # to L, count = {count}")
                 return True
             
             #### TODO: OLD CODE!!!!! REMOVE!!!
