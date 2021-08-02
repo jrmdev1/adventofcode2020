@@ -119,7 +119,6 @@ def check5orMoreOccupied( r, c ):
         return False
     for ri in range(-1, 2):
         for ci in range(-1, 2):
-            #count = 0
             if ri==0 and ci==0:
                 continue
             # -1,-1 -1,0 -1,1 0,-1 0,0 0,1 1,-1 1,0 1,1
