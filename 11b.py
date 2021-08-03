@@ -4,6 +4,9 @@ import copy
 
 filename = "data11_short.txt"
 
+r_check = 3
+c_check = 9
+
 file = open(filename)
 filestr = file.read()
 a_list = filestr.split("\n")
@@ -113,7 +116,7 @@ def check5orMoreOccupied( r, c ):
     global maxrows
     global maxcolumns
     count = 0
-    if r==0 and c==3:
+    if r==r_check and c==c_check:
         print(f"check 5+ occ around {r}, {c}")
     if not Occupied(r,c):    # middle seat must be occupied!
         return False
@@ -164,10 +167,10 @@ def check5orMoreOccupied( r, c ):
                         count += 1
                         break
             #print(f"check 5+ occ around {r}, {c}, occ count = {count}")
-            if r==0 and c==3:
+            if r==r_check and c==c_check:
                 print(f"rc {r},{c} ri={ri},ci={ci} count = {count}")
             if count >= 5:
-                if r==0 and c==3:
+                if r==r_check and c==c_check:
                     print(f"Change {r},{c} # to L, count = {count}")
                 return True
             
@@ -199,7 +202,8 @@ while not needExit:
     print(f"Pass #{passNum}:")
     passNum += 1
     for r, row in enumerate(matrix):
-        print(f"row: {row}")
+        str_row = "".join(row)
+        print(f"row: {str_row}")
         #row_id = 0
         for c, char in enumerate(row):
             #print(f"c={c}, char={char}")
