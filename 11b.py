@@ -171,7 +171,7 @@ def check5orMoreOccupied( r, c ):
                 print(f"rc {r},{c} ri={ri},ci={ci} count = {count}")
             if count >= 5:
                 if r==r_check and c==c_check:
-                    print(f"Change {r},{c} # to L, count = {count}")
+                    print(f"   Change {r},{c} # to L, count = {count}")
                 return True
             
             #### TODO: OLD CODE!!!!! REMOVE!!!
@@ -191,7 +191,9 @@ def countOccupied():
             if char == "#":
                 cnt +=1
     return cnt
-    
+
+#def checkAndPrintChangedWatch()
+
 changedmatrix = copy.deepcopy(matrix)
 #print(f"matrix={matrix}")
 #print(f"changedmatrix={changedmatrix}")
@@ -212,6 +214,8 @@ while not needExit:
             elif char == "L":    # empty, check around it.
                 if checkNoOccupiedSeatsAround( r, c ):
                     changedmatrix[r][c] = "#"
+                    if r==r_check and c==c_check:
+                        print(f"    rc {r},{c} changed to #")
             elif char == "#":    # occupied, check around it.
                 if check5orMoreOccupied( r, c ):
                     changedmatrix[r][c] = "L"
