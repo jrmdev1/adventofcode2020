@@ -1,0 +1,63 @@
+family@Josephs-iMac-2 advent2020 % python3 11b.py | more
+maxrows=10, maxcolumns=10
+Pass #0:
+row: L.LL.LL.LL
+row: LLLLLLL.LL
+row: L.L.L..L..
+row: LLLL.LL.LL
+    rc 3,9 changed to #
+row: L.LL.LL.LL
+row: L.LLLLL.LL
+row: ..L.L.....
+row: LLLLLLLLLL
+row: L.LLLLLL.L
+row: L.LLLLL.LL
+Copied matrix from changedmatrix
+Pass #1:
+row: #.##.##.##
+       r,c = 0,0 ri,ci= -1,-1 arrow=0
+       r,c = 0,2 ri,ci= -1,-1 arrow=0
+       r,c = 0,3 ri,ci= -1,-1 arrow=0
+       r,c = 0,5 ri,ci= -1,-1 arrow=0
+       r,c = 0,6 ri,ci= -1,-1 arrow=0
+       r,c = 0,8 ri,ci= -1,-1 arrow=0
+       r,c = 0,9 ri,ci= -1,-1 arrow=0
+row: #######.##
+       r,c = 1,0 ri,ci= -1,-1 arrow=0
+       r,c = 1,1 ri,ci= -1,-1 arrow=0
+       r,c = 1,2 ri,ci= -1,-1 arrow=0
+       r,c = 1,3 ri,ci= -1,-1 arrow=0
+       r,c = 1,4 ri,ci= -1,-1 arrow=0
+       r,c = 1,5 ri,ci= -1,-1 arrow=0
+       r,c = 1,6 ri,ci= -1,-1 arrow=0
+       r,c = 1,8 ri,ci= -1,-1 arrow=0
+       r,c = 1,9 ri,ci= -1,-1 arrow=0
+row: #.#.#..#..
+       r,c = 2,0 ri,ci= -1,-1 arrow=0
+       r,c = 2,2 ri,ci= -1,-1 arrow=0
+       r,c = 2,4 ri,ci= -1,-1 arrow=0
+       r,c = 2,7 ri,ci= -1,-1 arrow=0
+row: ####.##.##
+       r,c = 3,0 ri,ci= -1,-1 arrow=0
+       r,c = 3,1 ri,ci= -1,-1 arrow=0
+       r,c = 3,2 ri,ci= -1,-1 arrow=0
+       r,c = 3,3 ri,ci= -1,-1 arrow=0
+       r,c = 3,5 ri,ci= -1,-1 arrow=0
+       r,c = 3,6 ri,ci= -1,-1 arrow=0
+       r,c = 3,8 ri,ci= -1,-1 arrow=0
+check 5+ occ around 3, 9
+       r,c = 3,9 ri,ci= -1,-1 arrow=0
+rc 3,9 ri=-1,ci=-1 arrow = 0 count = 0
+rc 3,9 ri=-1,ci=0 arrow = 1 count = 1
+rc 3,9 ri=-1,ci=1 arrow = 9 count = 1
+rc 3,9 ri=0,ci=-1 arrow = 8 count = 2
+rc 3,9 ri=0,ci=1 arrow = 8 count = 2
+rc 3,9 ri=1,ci=-1 arrow = 0 count = 3
+rc 3,9 ri=1,ci=0 arrow = 4 count = 4
+rc 3,9 ri=1,ci=1 arrow = 9 count = 4
+row: #.##.##.##
+       r,c = 4,0 ri,ci= -1,-1 arrow=0
+       r,c = 4,2 ri,ci= -1,-1 arrow=0
+       r,c = 4,3 ri,ci= -1,-1 arrow=0
+       r,c = 4,5 ri,ci= -1,-1 arrow=0
+       r,c = 4,6 ri,ci= -1,-1 arrow=0
