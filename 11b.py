@@ -4,8 +4,8 @@ import copy
 
 filename = "data11_short.txt"
 
-r_check = 3
-c_check = 9
+r_check = -1
+c_check = -1
 
 file = open(filename)
 filestr = file.read()
@@ -60,27 +60,27 @@ def checkNoOccupiedSeatsAround( r, c ):
             if ri == 0 and ci == -1:
                 # scan back to limit
                 for arrow in range( c+ci, -1, -1): # neg step and stop at 0.
-                    if Occupied(r+ri, arrow):
+                    if Occupied(r, arrow):
                         return False
-                    elif Empty(r+ri, arrow):
+                    elif Empty(r, arrow):
                         break
             elif ri == 0 and ci == 1:
                 for arrow in range( c+ci, maxcolumns): # 
-                    if Occupied(r+ri, arrow):
+                    if Occupied(r, arrow):
                         return False
-                    elif Empty(r+ri, arrow):
+                    elif Empty(r, arrow):
                         break
             elif ri == -1 and ci == 0:
                 for arrow in range( r+ri, -1, -1): # 
-                    if Occupied(arrow, c+ci):
+                    if Occupied(arrow, c):
                         return False
-                    elif Empty(arrow, c+ci):
+                    elif Empty(arrow, c):
                         break
             elif ri == 1 and ci == 0:
                 for arrow in range( r+ri, maxrows): # 
-                    if Occupied(arrow, c+ci):
+                    if Occupied(arrow, c):
                         return False
-                    elif Empty(arrow, c+ci):
+                    elif Empty(arrow, c):
                         break
             elif ri == 1 and ci == 1:
                 for arrow in range( 0, max(maxrows,maxcolumns) ): # 
@@ -89,10 +89,10 @@ def checkNoOccupiedSeatsAround( r, c ):
                     elif Empty(r+ri+arrow, c+ci+arrow):
                         break
             elif ri == -1 and ci == -1:
-                for arrow in range( 0, -1, -1): # 
-                    if Occupied(r+ri+arrow, c+ci+arrow):
+                for arrow in range( 0, max(r,c)): # 
+                    if Occupied(r+ri-arrow, c+ci-arrow):
                         return False
-                    elif Empty(r+ri+arrow, c+ci+arrow):
+                    elif Empty(r+ri-arrow, c+ci-arrow):
                         break
             elif ri == -1 and ci == 1:
                 for arrow in range( 0, max(maxrows,maxcolumns)): # 
@@ -126,43 +126,44 @@ def check5orMoreOccupied( r, c ):
                 continue
             # -1,-1 -1,0 -1,1 0,-1 0,0 0,1 1,-1 1,0 1,1
             if ri == 0 and ci == -1:
-                # scan back to limit
+                # scan back to limit, OKAY
                 for arrow in range( c+ci, -1, -1): # neg step and stop at 0.
-                    if Occupied(r+ri, arrow):
+                    if Occupied(r, arrow):  # was r+ri
                         count += 1
                         break
             elif ri == 0 and ci == 1:
                 for arrow in range( c+ci, maxcolumns): # 
-                    if Occupied(r+ri, arrow):
+                    if Occupied(r, arrow):   # was r+ri
                         count += 1
                         break
-            elif ri == -1 and ci == 0:
-                for arrow in range( r+ri, -1, -1): # 
-                    if Occupied(arrow, c+ci):
+            elif ri == -1 and ci == 0: # OKAY
+                for arrow in range( r+ri, -1, -1): 
+                    if Occupied(arrow, c):   # was c+ci
                         count += 1
                         break
             elif ri == 1 and ci == 0:
-                for arrow in range( r+ri, maxrows): # 
-                    if Occupied(arrow, c+ci):
+                for arrow in range( r+ri, maxrows): 
+                    if Occupied(arrow, c):   # was c+ci
                         count += 1
                         break
             elif ri == 1 and ci == 1:
-                for arrow in range( 0, max(maxrows,maxcolumns) ): # 
+                for arrow in range( 0, max(maxrows,maxcolumns) ):
                     if Occupied(r+ri+arrow, c+ci+arrow):
                         count += 1
                         break
-            elif ri == -1 and ci == -1:
-                for arrow in range( 0, -1, -1): #TODO: broken, not neg, and stops at -1 (0) (but not supposed to be negative....) 
-                    print(f"       r,c = {r},{c} ri,ci= {ri},{ci} arrow={arrow}")
-                    if Occupied(r+ri+arrow, c+ci+arrow):
+            # work on this part: need 2,2 1,1 and 0,0
+            elif ri == -1 and ci == -1: # OKAY
+                for arrow in range( 0, max(r,c)):  
+                    #print(f"       r,c = {r},{c} ri,ci= {ri},{ci} arrow={arrow}") ######
+                    if Occupied(r+ri-arrow, c+ci-arrow):
                         count += 1
                         break
-            elif ri == -1 and ci == 1:
+            elif ri == -1 and ci == 1: # OKAY
                 for arrow in range( 0, max(maxrows,maxcolumns)): # 
                     if Occupied(r+ri-arrow, c+ci+arrow):
                         count += 1
                         break
-            elif ri == 1 and ci == -1:
+            elif ri == 1 and ci == -1: # OKAY
                 for arrow in range( 0, max(maxrows,maxcolumns)): # 
                     if Occupied(r+ri+arrow, c+ci-arrow):
                         count += 1
@@ -175,13 +176,6 @@ def check5orMoreOccupied( r, c ):
                     print(f"   Change {r},{c} # to L, count = {count}")
                 return True
             
-            #### TODO: OLD CODE!!!!! REMOVE!!!
-            # if Occupied(r + ri, c + ci):
-            #     count += 1
-            #     # middle seat must be occupied, so assume count of 5 or greater.
-            #     if count >= 5:
-            #         #Can exit early, if already at count check.
-            #         return True
     return False
   
 def countOccupied():

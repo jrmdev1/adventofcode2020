@@ -1,0 +1,125 @@
+maxrows=10, maxcolumns=10
+Pass #0:
+row: L.LL.LL.LL
+row: LLLLLLL.LL
+row: L.L.L..L..
+row: LLLL.LL.LL
+row: L.LL.LL.LL
+row: L.LLLLL.LL
+row: ..L.L.....
+row: LLLLLLLLLL
+row: L.LLLLLL.L
+row: L.LLLLL.LL
+Copied matrix from changedmatrix
+Pass #1:
+row: #.##.##.##
+row: #######.##
+row: #.#.#..#..
+row: ####.##.##
+row: #.##.##.##
+row: #.#####.##
+row: ..#.#.....
+row: ##########
+row: #.######.#
+row: #.#####.##
+Copied matrix from changedmatrix
+Pass #2:
+row: #.LL.LL.L#
+row: #LLLLLL.LL
+row: L.L.L..L..
+row: LLLL.LL.LL
+row: L.LL.LL.LL
+row: L.LLLLL.LL
+row: ..L.L.....
+row: LLLLLLLLL#
+row: #.LLLLLL.L
+row: #.LLLLL.L#
+Copied matrix from changedmatrix
+Pass #3:
+row: #.L#.##.L#
+row: #L#####.LL
+row: L.#.#..#..
+row: ##L#.##.##
+row: #.##.#L.##
+row: #.#####.#L
+row: ..#.#.....
+row: LLL####LL#
+row: #.L#####.L
+row: #.L####.L#
+Copied matrix from changedmatrix
+Pass #4:
+row: #.LL.LL.L#      vs #.L#.L#.L#
+row: #LLLLLL.LL
+row: L.L.L..L..      vs L.L.L..#..
+row: LLLL.LL.LL      vs ##LL.LL.L#
+row: L.LL.LL.LL      vs L.LL.LL.L#
+row: L.LLLLL.LL      vs #.LLLLL.LL
+row: ..L.L.....
+row: LLLLLLLLL#
+row: #.LLLLL#.L
+row: #.L#LLL.L#      vs #.L#LL#.L#
+Copied matrix from changedmatrix
+Pass #5:
+row: #.L#.##.L#
+row: #L#####.LL
+row: L.#.#..#..
+row: ##L#.##.##
+row: #.##.#L.##
+row: #.#####.#L
+row: ..#.#.....
+row: LLL###LLL#
+row: #.LLL#L#.L
+row: #.L#L#L.L#
+Copied matrix from changedmatrix
+Pass #6:
+row: #.LL.LL.L#
+row: #LLLLLL.LL
+row: L.L.L..L..
+row: LLLL.LL.LL
+row: L.LL.LL.LL
+row: #.LLLLL.LL
+row: ..L.L.....
+row: LLLLLLLLL#
+row: #.LLLLL#.L
+row: #.L#L#L.L#
+Copied matrix from changedmatrix
+Pass #7:
+row: #.L#.##.L#
+row: #L#####.LL
+row: L.#.#..#..
+row: ##L#.##.##
+row: L.##.#L.##
+row: #.L####.#L
+row: ..#.#.....
+row: LLL###LLL#
+row: #.LLLLL#.L
+row: #.L#L#L.L#
+Copied matrix from changedmatrix
+Pass #8:
+row: #.LL.LL.L#
+row: #LLLLLL.LL
+row: L.L.L..L..
+row: L#LL.LL.LL
+row: L.LL.LL.LL
+row: #.LLLLL.#L
+row: ..L.L.....
+row: LLLLLLLLL#
+row: #.LLLLL#.L
+row: #.L#L#L.L#
+Copied matrix from changedmatrix
+Pass #9:
+row: #.L#.##.L#
+row: #L#####.LL
+row: L.L.#..#..
+row: L#L#.#L.##
+row: L.L#.#L.LL
+row: #.L###L.#L
+row: ..#.#.....
+row: LLL###LLL#
+row: #.LLLLL#.L
+row: #.L#L#L.L#
+Copied matrix from changedmatrix
+Pass #10:
+row: #.LL.LL.L#
+row: #LLLLLL.LL
+:

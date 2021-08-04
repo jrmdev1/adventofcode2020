@@ -26,7 +26,7 @@ Pass 2
 #.LL.LL.L#
 #LLLLLL.LL
 L.L.L..L..
-LLLL.LL.LL   <= is # !
+LLLL.LL.LL   <= in the output, was incorrectly #
 L.LL.LL.LL
 L.LLLLL.LL
 ..L.L.....
