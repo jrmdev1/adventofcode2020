@@ -59,52 +59,52 @@ def checkNoOccupiedSeatsAround( r, c ):
             # -1,-1 -1,0 -1,1 0,-1 0,0 0,1 1,-1 1,0 1,1
             if ri == 0 and ci == -1:
                 # scan back to limit
-                for c_arrow in range( c+ci, -1, -1): # neg step and stop at 0.
-                    if Occupied(r+ri, c_arrow):
+                for arrow in range( c+ci, -1, -1): # neg step and stop at 0.
+                    if Occupied(r+ri, arrow):
                         return False
-                    elif Empty(r+ri, c_arrow):
+                    elif Empty(r+ri, arrow):
                         break
             elif ri == 0 and ci == 1:
-                for c_arrow in range( c+ci, maxcolumns): # 
-                    if Occupied(r+ri, c_arrow):
+                for arrow in range( c+ci, maxcolumns): # 
+                    if Occupied(r+ri, arrow):
                         return False
-                    elif Empty(r+ri, c_arrow):
+                    elif Empty(r+ri, arrow):
                         break
             elif ri == -1 and ci == 0:
-                for r_arrow in range( r+ri, -1, -1): # 
-                    if Occupied(r_arrow, c+ci):
+                for arrow in range( r+ri, -1, -1): # 
+                    if Occupied(arrow, c+ci):
                         return False
-                    elif Empty(r_arrow, c+ci):
+                    elif Empty(arrow, c+ci):
                         break
             elif ri == 1 and ci == 0:
-                for r_arrow in range( r+ri, maxrows): # 
-                    if Occupied(r_arrow, c+ci):
+                for arrow in range( r+ri, maxrows): # 
+                    if Occupied(arrow, c+ci):
                         return False
-                    elif Empty(r_arrow, c+ci):
+                    elif Empty(arrow, c+ci):
                         break
             elif ri == 1 and ci == 1:
-                for offset in range( 0, max(maxrows,maxcolumns) ): # 
-                    if Occupied(r+ri+offset, c+ci+offset):
+                for arrow in range( 0, max(maxrows,maxcolumns) ): # 
+                    if Occupied(r+ri+arrow, c+ci+arrow):
                         return False
-                    elif Empty(r+ri+offset, c+ci+offset):
+                    elif Empty(r+ri+arrow, c+ci+arrow):
                         break
             elif ri == -1 and ci == -1:
-                for offset in range( 0, -1, -1): # 
-                    if Occupied(r+ri+offset, c+ci+offset):
+                for arrow in range( 0, -1, -1): # 
+                    if Occupied(r+ri+arrow, c+ci+arrow):
                         return False
-                    elif Empty(r+ri+offset, c+ci+offset):
+                    elif Empty(r+ri+arrow, c+ci+arrow):
                         break
             elif ri == -1 and ci == 1:
-                for offset in range( 0, max(maxrows,maxcolumns)): # 
-                    if Occupied(r+ri-offset, c+ci+offset):
+                for arrow in range( 0, max(maxrows,maxcolumns)): # 
+                    if Occupied(r+ri-arrow, c+ci+arrow):
                         return False
-                    elif Empty(r+ri-offset, c+ci+offset):
+                    elif Empty(r+ri-arrow, c+ci+arrow):
                         break
             elif ri == 1 and ci == -1:
-                for offset in range( 0, max(maxrows,maxcolumns)): # 
-                    if Occupied(r+ri+offset, c+ci-offset):
+                for arrow in range( 0, max(maxrows,maxcolumns)): # 
+                    if Occupied(r+ri+arrow, c+ci-arrow):
                         return False
-                    elif Empty(r+ri+offset, c+ci-offset):
+                    elif Empty(r+ri+arrow, c+ci-arrow):
                         break
     return True
 
@@ -127,48 +127,49 @@ def check5orMoreOccupied( r, c ):
             # -1,-1 -1,0 -1,1 0,-1 0,0 0,1 1,-1 1,0 1,1
             if ri == 0 and ci == -1:
                 # scan back to limit
-                for c_arrow in range( c+ci, -1, -1): # neg step and stop at 0.
-                    if Occupied(r+ri, c_arrow):
+                for arrow in range( c+ci, -1, -1): # neg step and stop at 0.
+                    if Occupied(r+ri, arrow):
                         count += 1
                         break
             elif ri == 0 and ci == 1:
-                for c_arrow in range( c+ci, maxcolumns): # 
-                    if Occupied(r+ri, c_arrow):
+                for arrow in range( c+ci, maxcolumns): # 
+                    if Occupied(r+ri, arrow):
                         count += 1
                         break
             elif ri == -1 and ci == 0:
-                for r_arrow in range( r+ri, -1, -1): # 
-                    if Occupied(r_arrow, c+ci):
+                for arrow in range( r+ri, -1, -1): # 
+                    if Occupied(arrow, c+ci):
                         count += 1
                         break
             elif ri == 1 and ci == 0:
-                for r_arrow in range( r+ri, maxrows): # 
-                    if Occupied(r_arrow, c+ci):
+                for arrow in range( r+ri, maxrows): # 
+                    if Occupied(arrow, c+ci):
                         count += 1
                         break
             elif ri == 1 and ci == 1:
-                for offset in range( 0, max(maxrows,maxcolumns) ): # 
-                    if Occupied(r+ri+offset, c+ci+offset):
+                for arrow in range( 0, max(maxrows,maxcolumns) ): # 
+                    if Occupied(r+ri+arrow, c+ci+arrow):
                         count += 1
                         break
             elif ri == -1 and ci == -1:
-                for offset in range( 0, -1, -1): # 
-                    if Occupied(r+ri+offset, c+ci+offset):
+                for arrow in range( 0, -1, -1): #TODO: broken, not neg, and stops at -1 (0) (but not supposed to be negative....) 
+                    print(f"       r,c = {r},{c} ri,ci= {ri},{ci} arrow={arrow}")
+                    if Occupied(r+ri+arrow, c+ci+arrow):
                         count += 1
                         break
             elif ri == -1 and ci == 1:
-                for offset in range( 0, max(maxrows,maxcolumns)): # 
-                    if Occupied(r+ri-offset, c+ci+offset):
+                for arrow in range( 0, max(maxrows,maxcolumns)): # 
+                    if Occupied(r+ri-arrow, c+ci+arrow):
                         count += 1
                         break
             elif ri == 1 and ci == -1:
-                for offset in range( 0, max(maxrows,maxcolumns)): # 
-                    if Occupied(r+ri+offset, c+ci-offset):
+                for arrow in range( 0, max(maxrows,maxcolumns)): # 
+                    if Occupied(r+ri+arrow, c+ci-arrow):
                         count += 1
                         break
             #print(f"check 5+ occ around {r}, {c}, occ count = {count}")
             if r==r_check and c==c_check:
-                print(f"rc {r},{c} ri={ri},ci={ci} count = {count}")
+                print(f"rc {r},{c} ri={ri},ci={ci} arrow = {arrow} count = {count}")
             if count >= 5:
                 if r==r_check and c==c_check:
                     print(f"   Change {r},{c} # to L, count = {count}")
