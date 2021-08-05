@@ -21,9 +21,6 @@ for i in range(maxrows):
 #print(f"2d:\n{matrix}")
 
 def Occupied( r, c ):
-    global matrix
-    global maxrows
-    global maxcolumns
     #print(f"r={r},c={c}")
     if r < 0 or r >= maxrows or c < 0 or c >= maxcolumns:
         return False  # if exceeds bounds, then NOT occupied.
@@ -33,9 +30,6 @@ def Occupied( r, c ):
         return False # cannot be floor, or empty
 
 def Empty( r, c ):
-    global matrix
-    global maxrows
-    global maxcolumns
     #print(f"r={r},c={c}")
     if r < 0 or r >= maxrows or c < 0 or c >= maxcolumns:
         return True  # if exceeds bounds, then EMPTY.
@@ -47,9 +41,6 @@ def Empty( r, c ):
 # If a seat is empty (L) and 
 # there are no occupied seats adjacent to it, the seat becomes occupied
 def checkNoOccupiedSeatsAround( r, c ):
-    global matrix
-    global maxrows
-    global maxcolumns
     #print(f"check no occ around {r}, {c}")
     # will skip rest of checks if one returns FALSE
     for ri in range(-1,2):
@@ -112,9 +103,6 @@ def checkNoOccupiedSeatsAround( r, c ):
 # the seat becomes empty (L)
 # Otherwise, the seat's state does not change.
 def check5orMoreOccupied( r, c ):
-    global matrix
-    global maxrows
-    global maxcolumns
     count = 0
     if r==r_check and c==c_check:
         print(f"check 5+ occ around {r}, {c}")
@@ -195,7 +183,7 @@ def check5orMoreOccupied( r, c ):
     return False
   
 def countOccupied():
-    global matrix
+    #global matrix
     cnt = 0
     for row in matrix:
         for char in row:
@@ -204,7 +192,7 @@ def countOccupied():
     return cnt
 
 def dumpMatrix():
-    global matrix
+    #global matrix
     for r, row in enumerate(matrix):
         str_row = "".join(row)
         print(f"row: {str_row}")
