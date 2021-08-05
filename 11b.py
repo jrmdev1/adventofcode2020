@@ -183,7 +183,6 @@ def check5orMoreOccupied( r, c ):
     return False
   
 def countOccupied():
-    #global matrix
     cnt = 0
     for row in matrix:
         for char in row:
@@ -192,7 +191,6 @@ def countOccupied():
     return cnt
 
 def dumpMatrix():
-    #global matrix
     for r, row in enumerate(matrix):
         str_row = "".join(row)
         print(f"row: {str_row}")
