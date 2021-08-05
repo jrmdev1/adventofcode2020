@@ -120,8 +120,8 @@ def check5orMoreOccupied( r, c ):
         print(f"check 5+ occ around {r}, {c}")
     if not Occupied(r,c):    # middle seat must be occupied!
         return False
-    for ri in range(-1, 2):
-        for ci in range(-1, 2):
+    for ri in range(-1,2):
+        for ci in range(-1,2):
             if ri==0 and ci==0:
                 continue
             # -1,-1 -1,0 -1,1 0,-1 0,0 0,1 1,-1 1,0 1,1
@@ -141,7 +141,7 @@ def check5orMoreOccupied( r, c ):
                     elif Empty(r, arrow):
                         break
             elif ri == -1 and ci == 0:
-                for arrow in range( r+ri, -1, -1): 
+                for arrow in range( r+ri, -1, -1):
                     if Occupied(arrow, c):
                         count += 1
                         break
