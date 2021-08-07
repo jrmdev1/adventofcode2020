@@ -1,8 +1,8 @@
 #Advent of code 2020
-# 08/06/21 day 12a
+# 08/06/21 day 12b
 #import copy
 
-filename = "data12.txt"
+filename = "data12_short.txt"
 
 file = open(filename)
 filestr = file.read()
