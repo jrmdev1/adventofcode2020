@@ -3,7 +3,7 @@
 #import copy
 import sys
 
-filename = "data13_short2.txt"
+filename = "data13_short.txt"
 
 file = open(filename)
 filestr = file.read()
@@ -13,67 +13,73 @@ maxrows = len(a_list)
 print(a_list)
 print(f"maxrows={maxrows}")
 
-#timestamp = int(a_list[0])
-timestamp = 99999
-#print(f"timestamp = {timestamp}")
-#buses = a_list[1].replace(",x","").split(",")
 buses = a_list[1].split(",")  #we need the x's now....
-print(f"{buses}")
-bus_t = []
-for bus in buses:
-    bus_t.append(int(0))
+lastBusIndex = len(buses)-1
+print(f"{buses} lastBusIndex={lastBusIndex}")
 
 def findFactorOnOrAfter( timestamp, bus_int ):
     factor = timestamp // bus_int
     leaving = (factor+1) * bus_int  # bus after the timestamp
+    print(f"bus_int={bus_int}, timestamp={timestamp}, leaving={leaving}, factor={factor}")
     return leaving, factor
 
-# 13a: find the earliest bus you can take to the airport
-lowest = sys.maxsize
-#print(f"lowest={lowest}")
-lowest_bus = 0
+# for each entry, find next factor, use current t for seed
+#   increment t, check for factor, 
+# if not factor, restart with new seed (?) on first entry
+# if factor, increment t and try next one.
+# if last bus, and did get a factor, then done 
+
 done = False
 t = 0
 while not done:
-    bus_t = []
     for bus in buses:
+        print(f"bus={bus}, index={buses.index(bus)}, t={t}")
+        if t > 1068781:
+            print(f"ERROR, exceeded test value")
+            done = True
+            break
         if bus == "x":
-            print(f"x found")
+            print(f"x seen")
             t += 1
-            #continue
         else:
             leaving, factor = findFactorOnOrAfter( t, int(bus))
-            t = leaving
-            index = buses.index(bus)
-            print(f"bus={bus}, index = {index} factor={factor}, leaving={leaving}")
-        bus_t.append(t)
-        
-    start_t = bus_t[0]-1
-    good = False
-    for temp_t in bus_t:
-        if temp_t != start_t + 1:
-            good = False
-            break
-        else:
-            good = True
-    if good:
-        done = True    
+            if t == factor: # TODO: this may be problem, in that may not equal after?
+                if buses.index(bus) == lastBusIndex:
+                    done = True
+                else:
+                    print(f"restarting first bus using t={t}")
+                    t = leaving + 1
+                    break
+            else:
+                print(f"not a factor, t={t}, bus={bus}")
+            t = leaving + 1
 
 print(f"t={t}")
-#print(f"lowest: lowest_bus={lowest_bus}, lowest={lowest}")
-# wait_time = lowest - timestamp
-# print(f"wait_time = {wait_time}, multiplied = {wait_time*lowest_bus}")
-
-# x = timestamp // int(bus)
-# leaving = (x+1) * int(bus)  # one bus after the timestamp
-# print(f"bus={bus}, index = {buses.index(bus)} x={x}, leaving={leaving}")
-# if leaving < lowest:
-#     lowest = leaving
-#     lowest_bus = int(bus)
-#     #print(f"  {bus}, {leaving}, {lowest}")
 
 # print(f"bus={bus}, index = {buses.index(bus)} x={x}, leaving={leaving}")
 # if leaving < lowest:
 #     lowest = leaving
 #     lowest_bus = int(bus)
 #     #print(f"  {bus}, {leaving}, {lowest}")
+
+    # bus_t = []
+    # for bus in buses:
+    #     if bus == "x":
+    #         print(f"x found")
+    #         t += 1
+    #         #continue
+    #     else:
+    #         leaving, factor = findFactorOnOrAfter( t, int(bus))
+    #         t = leaving
+    #         index = buses.index(bus)
+    #         print(f"bus={bus}, index = {index} factor={factor}, leaving={leaving}")
+    #     bus_t.append(t)
+        
+    # start_t = bus_t[0]-1
+    # good = False
+    # for temp_t in bus_t:
+    #     if temp_t != start_t + 1:
+    #         good = False
+    #         break
+    #     else:
+    #         good = True
