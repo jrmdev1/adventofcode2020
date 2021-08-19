@@ -17,11 +17,12 @@ buses = a_list[1].split(",")  #we need the x's now....
 lastBusIndex = len(buses)-1
 print(f"{buses} lastBusIndex={lastBusIndex}")
 
-def findFactorOnOrAfter( timestamp, bus_int ):
-    factor = timestamp // bus_int
-    leaving = (factor+1) * bus_int  # bus after the timestamp
-    print(f"bus_int={bus_int}, timestamp={timestamp}, leaving={leaving}, factor={factor}")
-    return leaving, factor
+# def findFactorOnOrAfter( timestamp, bus_int ):
+#     mul = timestamp // bus_int
+#     leaving = (mul+1) * bus_int  # bus after the timestamp
+#     #remain = 
+#     print(f"bus_int={bus_int}, timestamp={timestamp}, leaving={leaving}, mul={mul}")
+#     return leaving, mul
 
 # for each entry, find next factor, use current t for seed
 #   increment t, check for factor, 
@@ -30,33 +31,40 @@ def findFactorOnOrAfter( timestamp, bus_int ):
 # if last bus, and did get a factor, then done 
 
 done = False
+first_bus_ts = 0
 t = 1
 while not done:
     for bus in buses:
         print(f"bus={bus}, index={buses.index(bus)}, t={t}")
-        if t > 1068781:
-            print(f"ERROR, exceeded test value")
-            done = True
-            break
+        # if t > 1068788:
+        #     print(f"ERROR, exceeded test value")
+        #     done = True
+        #     break
         if bus == "x":
             print(f"x seen")
             t += 1
         else:
-            leaving, factor = findFactorOnOrAfter( t, int(bus))
-            if t == factor: # TODO: this may be problem, in that may not equal after?
+            #leaving, mul, remain = findFactorOnOrAfter( t, int(bus))
+            remain = t % int(bus)
+            #leaving = 
+            if remain == 0:
                 print(f"FOUND A FACTOR! t={t}, bus={bus}")
-                if buses.index(bus) == lastBusIndex:
+                index = buses.index(bus)
+                if index == 0:  # first
+                    first_bus_ts = t
+                if index == lastBusIndex:
                     done = True
                 else:
-                    print(f"not last factor, continuing t={t}")
-                    t = leaving + 1
-                    break
+                    print(f"is factor but not last factor, continuing t={t}")
+                    t += 1   # t must be 1 more than last bus factor
+                    #TODO: see if way to increment MUCH more than 1 for this case to speed up!!!!
             else:
                 print(f"not a factor, t={t}, bus={bus}")
-                #TODO: what to do here???            
-            t = leaving + 1
+                t += 1 # inc time to keep searching, and break to skip back to starting bus
+                #TODO: see if way to increment MUCH more than 1 for this case to speed up!!!!
+                break
 
-print(f"t={t}")
+print(f"Finished! t={t}, >>>> first bus timestamp = {first_bus_ts} <<<<")
 
 # print(f"bus={bus}, index = {buses.index(bus)} x={x}, leaving={leaving}")
 # if leaving < lowest:
