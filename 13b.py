@@ -66,30 +66,3 @@ while not done:
 
 print(f"Finished! t={t}, >>>> first bus timestamp = {first_bus_ts} <<<<")
 
-# print(f"bus={bus}, index = {buses.index(bus)} x={x}, leaving={leaving}")
-# if leaving < lowest:
-#     lowest = leaving
-#     lowest_bus = int(bus)
-#     #print(f"  {bus}, {leaving}, {lowest}")
-
-    # bus_t = []
-    # for bus in buses:
-    #     if bus == "x":
-    #         print(f"x found")
-    #         t += 1
-    #         #continue
-    #     else:
-    #         leaving, factor = findFactorOnOrAfter( t, int(bus))
-    #         t = leaving
-    #         index = buses.index(bus)
-    #         print(f"bus={bus}, index = {index} factor={factor}, leaving={leaving}")
-    #     bus_t.append(t)
-        
-    # start_t = bus_t[0]-1
-    # good = False
-    # for temp_t in bus_t:
-    #     if temp_t != start_t + 1:
-    #         good = False
-    #         break
-    #     else:
-    #         good = True
