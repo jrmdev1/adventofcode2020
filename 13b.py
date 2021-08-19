@@ -3,7 +3,7 @@
 #import copy
 import sys
 
-filename = "data13_short.txt"
+filename = "data13_short2.txt"
 
 file = open(filename)
 filestr = file.read()
@@ -13,7 +13,7 @@ maxrows = len(a_list)
 print(a_list)
 print(f"maxrows={maxrows}")
 
-buses = a_list[1].split(",")  #we need the x's now....
+buses = a_list[1].split(",")  #need the x's now....
 lastBusIndex = len(buses)-1
 print(f"{buses} lastBusIndex={lastBusIndex}")
 
@@ -32,34 +32,33 @@ print(f"{buses} lastBusIndex={lastBusIndex}")
 
 done = False
 first_bus_ts = 0
-t = 1
+t = 1 # 1200001486 # 1202161486 #TODO: try precalc start number!
 while not done:
     for bus in buses:
-        print(f"bus={bus}, index={buses.index(bus)}, t={t}")
+        #print(f"bus={bus}, index={buses.index(bus)}, t={t}")
         # if t > 1068788:
         #     print(f"ERROR, exceeded test value")
         #     done = True
         #     break
         if bus == "x":
-            print(f"x seen")
+            #print(f"x seen")
             t += 1
         else:
-            #leaving, mul, remain = findFactorOnOrAfter( t, int(bus))
             remain = t % int(bus)
-            #leaving = 
             if remain == 0:
-                print(f"FOUND A FACTOR! t={t}, bus={bus}")
                 index = buses.index(bus)
+                if index >= 2:  # reduce how often to print for speed.
+                    print(f"FOUND A FACTOR! t={t}, index = {index}, bus={bus}")
                 if index == 0:  # first
                     first_bus_ts = t
                 if index == lastBusIndex:
                     done = True
                 else:
-                    print(f"is factor but not last factor, continuing t={t}")
+                    #print(f"  factor but not last, continuing t={t}")
                     t += 1   # t must be 1 more than last bus factor
                     #TODO: see if way to increment MUCH more than 1 for this case to speed up!!!!
             else:
-                print(f"not a factor, t={t}, bus={bus}")
+                #print(f"not a factor, t={t}, bus={bus}")
                 t += 1 # inc time to keep searching, and break to skip back to starting bus
                 #TODO: see if way to increment MUCH more than 1 for this case to speed up!!!!
                 break
