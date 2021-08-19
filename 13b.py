@@ -30,7 +30,7 @@ def findFactorOnOrAfter( timestamp, bus_int ):
 # if last bus, and did get a factor, then done 
 
 done = False
-t = 0
+t = 1
 while not done:
     for bus in buses:
         print(f"bus={bus}, index={buses.index(bus)}, t={t}")
@@ -44,14 +44,16 @@ while not done:
         else:
             leaving, factor = findFactorOnOrAfter( t, int(bus))
             if t == factor: # TODO: this may be problem, in that may not equal after?
+                print(f"FOUND A FACTOR! t={t}, bus={bus}")
                 if buses.index(bus) == lastBusIndex:
                     done = True
                 else:
-                    print(f"restarting first bus using t={t}")
+                    print(f"not last factor, continuing t={t}")
                     t = leaving + 1
                     break
             else:
                 print(f"not a factor, t={t}, bus={bus}")
+                #TODO: what to do here???            
             t = leaving + 1
 
 print(f"t={t}")
