@@ -4,17 +4,22 @@
 import sys
 import re
 
+# "{0:b}".format(10)
+#f'0b{number:08b}'
+
 def applyMask(mask, val):
     newval = val
     mask1 = mask.replace("X", "0")
     mask1_int = int(mask1, 2)
-    newval &= mask1_int
+    print(f"mask1 binary = {mask1_int:b}")
+    newval |= mask1_int 
     print(f"mask1={mask1}, mask1_int={mask1_int}, newval={newval}")
 
     mask0 = mask.replace("X", "1")
     mask0_int = int(mask0, 2)
-    print(f"mask0={mask0}, mask0_int={mask0_int}")
-    newval &= mask0_int
+    print(f"mask0 binary = {mask0_int:b}")
+    print(f"mask0={mask0}, mask0_int={mask0_int}, newval={newval}")
+    newval &= ~mask0_int
 
     print(f"mask={mask}, val={val}, newval={newval}")
     return newval
