@@ -24,7 +24,7 @@ def applyMask(mask, val):
     print(f"mask={mask}, val={val}, newval={newval}")
     return newval
 
-filename = "data14_short.txt"
+filename = "data14.txt"
 
 file = open(filename)
 filestr = file.read()
@@ -40,6 +40,9 @@ print(f"maxrows={maxrows}")
 
 mask = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 
+mem = [0] * 65535
+max_mem = 0
+
 for line in a_list:
     if line[:7] == "mask = ":
         #print(f"mask line: {line}")
@@ -54,6 +57,17 @@ for line in a_list:
         val = int(temp[1])
         print(f"index = {index} val={val}")
         newval = applyMask(mask, val)
+        
+        mem[index] = newval
+
+        if index > max_mem:
+            max_mem = index
     else:
         print(f"ERROR {line}")
 
+sum = 0
+for i in range(65535):
+    sum += mem[i]
+
+print(f"max_mem = {max_mem}")
+print(f"Sum = {sum}")
