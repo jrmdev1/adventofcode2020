@@ -1,5 +1,5 @@
 #Advent of code 2020
-# 08/23/21 day 14b
+# 08/21/21 day 14a
 #import copy
 import sys
 import re
@@ -55,13 +55,15 @@ for line in a_list:
         index_list_str = re.findall(r"\d+", temp[0])
         index = int(index_list_str[0])
         val = int(temp[1])
-        print(f"index = {index} val={val}")
-        newval = applyMask(mask, val)
+        print(f"index adress = {index} val={val}")
+        #newval = applyMask(mask, val)
+        newaddr = applyMask(mask, index)
         
-        mem[index] = newval
+        #mem[index] = newval
+        mem[newaddr] = val
 
-        if index > max_mem:
-            max_mem = index
+        if newaddr > max_mem:
+            max_mem = newaddr
     else:
         print(f"ERROR {line}")
 
