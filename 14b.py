@@ -29,6 +29,8 @@ def applyMaskAndWrite(mask, address, val):
     #print(f"mask0={mask0}, mask0_int={mask0_int}, newaddress={newaddress}")
     
     #newaddress &= ~mask0_int
+    # loop!!!!
+    mem[newaddress] = val  #TODO: only writing one val for now
 
     print(f"mask={mask}, address={address}, newaddress={newaddress},  val={val}")
     return newaddress
@@ -47,7 +49,7 @@ print(f"maxrows={maxrows}")
 
 mask = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 
-mem = [0] * 65535
+mem = [0] * 65535   #TODO: this will not be enough now due to X's
 max_mem = 0
 
 for line in a_list:
@@ -75,7 +77,7 @@ for line in a_list:
         print(f"ERROR {line}")
 
 sum = 0
-for i in range(65535):
+for i in range(65535):  #TODO: this will not be enough now due to X's
     sum += mem[i]
 
 print(f"max_mem = {max_mem}")
