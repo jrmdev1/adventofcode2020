@@ -43,7 +43,11 @@ def applyMaskAndWrite(mask, address, val):
         newaddress |= 2^index
         mem[newaddress] = val
         print(f"newaddress={newaddress},  val={val}")
-
+    
+    #TODO: Need to increment each X place, as in successive numbers
+    # but spread over thr X places.
+    # also need two functions to clear a bit and set a but
+    # consider whether makes sense to keep adding to an ongoing mask.
 
     #TODO: change to handle X now?
     # LOOP through ALL X combinations and write
