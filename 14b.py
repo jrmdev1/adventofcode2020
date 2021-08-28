@@ -4,22 +4,46 @@
 import sys
 import re
 
-filename = "data14_short2.txt"
-
 # "{0:b}".format(10)
 #f'0b{number:08b}'
+
+filename = "data14_short2.txt"
+mem = [0] * 65535   #TODO: this will not be enough now due to X's
+
+# address: 000000000000000000000000000000101010  (decimal 42)
+# mask:    000000000000000000000000000000X1001X
+# result:  000000000000000000000000000000X1101X
 
 # If the bitmask bit is 0, the corresponding memory address bit is unchanged.
 # If the bitmask bit is 1, the corresponding memory address bit is overwritten with 1.
 # If the bitmask bit is X, the corresponding memory address bit is floating.
 def applyMaskAndWrite(mask, address, val):
     # OK, and handles both 1 and 0 address bits now.
+    
     newaddress = address
     mask1 = mask.replace("X", "0")
     mask1_int = int(mask1, 2)
     #print(f"mask1 binary = {mask1_int:b}")
     newaddress |= mask1_int 
     #print(f"mask1={mask1}, mask1_int={mask1_int}, newaddress={newaddress}")
+    #WRITE first one 
+    mem[newaddress] = val  #TODO: only writing one val for now
+    
+    floating = []
+    mask_reverse = mask[::-1]
+    for ci,char in enumerate(mask_reverse):
+        print(f"char={char}")
+        if char=="X":
+            print(f"ci={ci}")
+            floating.append(ci)
+            #2^ci
+    print(f"floating={floating}")
+    for index in floating:
+        mem[newaddress] = val
+        newaddress |= 2^index
+        mem[newaddress] = val
+        print(f"newaddress={newaddress},  val={val}")
+
 
     #TODO: change to handle X now?
     # LOOP through ALL X combinations and write
@@ -30,9 +54,9 @@ def applyMaskAndWrite(mask, address, val):
     
     #newaddress &= ~mask0_int
     # loop!!!!
-    mem[newaddress] = val  #TODO: only writing one val for now
+    #mem[newaddress] = val  #TODO: only writing one val for now
 
-    print(f"mask={mask}, address={address}, newaddress={newaddress},  val={val}")
+    #print(f"mask={mask}, address={address}, newaddress={newaddress},  val={val}")
     return newaddress
 
 file = open(filename)
@@ -49,7 +73,7 @@ print(f"maxrows={maxrows}")
 
 mask = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 
-mem = [0] * 65535   #TODO: this will not be enough now due to X's
+
 max_mem = 0
 
 for line in a_list:
