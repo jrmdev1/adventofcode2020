@@ -37,12 +37,15 @@ def applyMaskAndWrite(mask, address, val):
             print(f"ci={ci}")
             floating.append(ci)
             #2^ci
+    float_cnt = mask_reverse.count("X")
+
     print(f"floating={floating}")
     for index in floating:
         mem[newaddress] = val
         newaddress |= 2^index
         mem[newaddress] = val
         print(f"newaddress={newaddress},  val={val}")
+
     
     #TODO: Need to increment each X place, as in successive numbers
     # but spread over thr X places.
