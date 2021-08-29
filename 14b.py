@@ -17,9 +17,21 @@ mem = [0] * 65535   #TODO: this will not be enough now due to X's
 # If the bitmask bit is 0, the corresponding memory address bit is unchanged.
 # If the bitmask bit is 1, the corresponding memory address bit is overwritten with 1.
 # If the bitmask bit is X, the corresponding memory address bit is floating.
+
+def set_bit(x, pos):
+    mask = 1 << pos
+    return x | mask
+
+def clear_bit(x, pos):
+    mask = 1 << pos
+    return x & ~mask
+
+def read_bit(x, pos):
+    mask = 1 << pos
+    return (x & mask) >> pos
+
 def applyMaskAndWrite(mask, address, val):
-    # OK, and handles both 1 and 0 address bits now.
-    
+    # OK, and handles both 1 and 0 address bits now. 
     newaddress = address
     mask1 = mask.replace("X", "0")
     mask1_int = int(mask1, 2)
@@ -40,19 +52,26 @@ def applyMaskAndWrite(mask, address, val):
     float_cnt = mask_reverse.count("X")
 
     print(f"float_cnt={float_cnt} floating={floating}")
+    incr = 0
     for index in floating:
-        mem[newaddress] = val
-        newaddress |= 2^index
-        mem[newaddress] = val
+        # mem[newaddress] = val
+        # newaddress |= 2^index
+        # mem[newaddress] = val
+        print(f"binary = {incr:036b}")
+
+        incr += 1
         print(f"newaddress={newaddress},  val={val}")
 
+    #TODO: !!! increment mask integer number by 1 in outer loop. from 0 up to 2^num of X's
+    # loop read bits spreading the bits using float index array over the X's in mask. up to float_cnt.
+    # (using set and clear bit)
+    # mask over the range of addresses and write to mem.
     
     #TODO: Need to increment each X place, as in successive numbers
-    # but spread over thr X places.
-    # also need two functions to clear a bit and set a but
+    # but spread over the X places.
     # consider whether makes sense to keep adding to an ongoing mask.
 
-    #TODO: change to handle X now?
+    #TODO: change to handle X now
     # LOOP through ALL X combinations and write
     #mask0 = mask.replace("X", "1")
     #mask0_int = ~(int(mask0, 2))
@@ -60,7 +79,7 @@ def applyMaskAndWrite(mask, address, val):
     #print(f"mask0={mask0}, mask0_int={mask0_int}, newaddress={newaddress}")
     
     #newaddress &= ~mask0_int
-    # loop!!!!
+    # loop!
     #mem[newaddress] = val  #TODO: only writing one val for now
 
     #print(f"mask={mask}, address={address}, newaddress={newaddress},  val={val}")
