@@ -39,7 +39,7 @@ def applyMaskAndWrite(mask, address, val):
             #2^ci
     float_cnt = mask_reverse.count("X")
 
-    print(f"floating={floating}")
+    print(f"float_cnt={float_cnt} floating={floating}")
     for index in floating:
         mem[newaddress] = val
         newaddress |= 2^index
