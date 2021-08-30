@@ -7,9 +7,9 @@ import re
 # "{0:b}".format(10)
 #f'0b{number:08b}'
 
-filename = "data14_short2.txt"
-mem = [0] * 65535   #TODO: this will not be enough now due to X's
-                    # 36-bit 68719476736 max
+filename = "data14_short.txt"
+mem = [0] * 3097224   #TODO: this will not be enough now due to X's
+                      # 36-bit 68719476736 max
 
 # address: 000000000000000000000000000000101010  (decimal 42)
 # mask:    000000000000000000000000000000X1001X
@@ -41,6 +41,7 @@ def applyMaskAndWrite(mask, address, val):
     #print(f"mask1={mask1}, mask1_int={mask1_int}, newaddress={newaddress}")
     #WRITE first one 
     mem[newaddress] = val  #TODO: only writing one val for now
+    print(f"newaddress={newaddress}, val={val}, bin={bin(newaddress)}")
     
     floating = []
     mask_reverse = mask[::-1]
@@ -53,15 +54,15 @@ def applyMaskAndWrite(mask, address, val):
     float_cnt = mask_reverse.count("X")
 
     print(f"float_cnt={float_cnt} floating={floating}")
-    incr = 0
-    for index in floating:
-        # mem[newaddress] = val
-        # newaddress |= 2**index
-        # mem[newaddress] = val
-        print(f"binary = {incr:036b}")
+    # incr = 0
+    # for index in floating:
+    #     # mem[newaddress] = val
+    #     # newaddress |= 2**index
+    #     # mem[newaddress] = val
+    #     print(f"binary = {incr:036b}")
 
-        incr += 1
-        print(f"newaddress={newaddress},  val={val}")
+    #     incr += 1
+    #     print(f"newaddress={newaddress},  val={val}")
 
     #for z in range(3):  # 4 = 100 binary
     #    print(f"z={z}, {read_bit(4, z)}")
@@ -78,7 +79,9 @@ def applyMaskAndWrite(mask, address, val):
             bitval = read_bit(incr, index)
             print(f"incr={incr}, index={index}, bitval={bitval}")
             # use floating index2 for OUTPUT, could use zip.
-
+            modnewAddr = set_bit(newaddress, floating[index])
+            print(f"mask={mask}, modnewAddr={modnewAddr}, newaddress={newaddress},  val={val},  bin={bin(modnewAddr)}")
+            mem[modnewAddr] = val
     
     #TODO: Need to increment each X place, as in successive numbers
     # but spread over the X places.
@@ -139,7 +142,7 @@ for line in a_list:
         print(f"ERROR {line}")
 
 sum = 0
-for i in range(65535):  #TODO: this will not be enough now due to X's
+for i in range(3097224):  #TODO: this will not be enough now due to X's
     sum += mem[i]
 
 print(f"max_mem = {max_mem}")
