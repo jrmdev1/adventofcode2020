@@ -9,6 +9,7 @@ import re
 
 filename = "data14_short2.txt"
 mem = [0] * 65535   #TODO: this will not be enough now due to X's
+                    # 36-bit 68719476736 max
 
 # address: 000000000000000000000000000000101010  (decimal 42)
 # mask:    000000000000000000000000000000X1001X
@@ -48,24 +49,36 @@ def applyMaskAndWrite(mask, address, val):
         if char=="X":
             print(f"ci={ci}")
             floating.append(ci)
-            #2^ci
+            #2**ci
     float_cnt = mask_reverse.count("X")
 
     print(f"float_cnt={float_cnt} floating={floating}")
     incr = 0
     for index in floating:
         # mem[newaddress] = val
-        # newaddress |= 2^index
+        # newaddress |= 2**index
         # mem[newaddress] = val
         print(f"binary = {incr:036b}")
 
         incr += 1
         print(f"newaddress={newaddress},  val={val}")
 
+    #for z in range(3):  # 4 = 100 binary
+    #    print(f"z={z}, {read_bit(4, z)}")
+
     #TODO: !!! increment mask integer number by 1 in outer loop. from 0 up to 2^num of X's
     # loop read bits spreading the bits using float index array over the X's in mask. up to float_cnt.
     # (using set and clear bit)
     # mask over the range of addresses and write to mem.
+    incr = 0
+    print(f"2**float_cnt={2**float_cnt}")
+    for incr in range(2**float_cnt):
+        for index in range(float_cnt):
+        #for index2 in floating:      #TODO: NOT floating index2! need input count!
+            bitval = read_bit(incr, index)
+            print(f"incr={incr}, index={index}, bitval={bitval}")
+            # use floating index2 for OUTPUT, could use zip.
+
     
     #TODO: Need to increment each X place, as in successive numbers
     # but spread over the X places.
@@ -98,7 +111,6 @@ print(f"maxrows={maxrows}")
 # mem[8] = 11
 
 mask = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-
 
 max_mem = 0
 
