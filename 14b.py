@@ -60,14 +60,12 @@ def applyMaskAndWrite(mask, address, val):
     #     # newaddress |= 2**index
     #     # mem[newaddress] = val
     #     print(f"binary = {incr:036b}")
-
     #     incr += 1
     #     print(f"newaddress={newaddress},  val={val}")
-
     #for z in range(3):  # 4 = 100 binary
     #    print(f"z={z}, {read_bit(4, z)}")
 
-    #TODO: !!! increment mask integer number by 1 in outer loop. from 0 up to 2^num of X's
+    #TODO:increment mask integer number by 1 in outer loop. from 0 up to 2^num of X's
     # loop read bits spreading the bits using float index array over the X's in mask. up to float_cnt.
     # (using set and clear bit)
     # mask over the range of addresses and write to mem.
@@ -75,7 +73,7 @@ def applyMaskAndWrite(mask, address, val):
     print(f"2**float_cnt={2**float_cnt}")
     for incr in range(2**float_cnt):
         for index in range(float_cnt):
-        #for index2 in floating:      #TODO: NOT floating index2! need input count!
+        #for index2 in floating:      #NOT floating index2! need input count!
             bitval = read_bit(incr, index)
             print(f"incr={incr}, index={index}, bitval={bitval}")
             # use floating index2 for OUTPUT, could use zip.
@@ -105,16 +103,10 @@ file = open(filename)
 filestr = file.read()
 a_list = filestr.split("\n")
 maxrows = len(a_list)
-#maxcolumns = len(a_list[0])
 print(a_list)
 print(f"maxrows={maxrows}")
 
-# 36 bits. MSbit on left, LSbit on right
-# mask = XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X
-# mem[8] = 11
-
 mask = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-
 max_mem = 0
 
 for line in a_list:
