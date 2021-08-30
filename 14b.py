@@ -31,6 +31,18 @@ def read_bit(x, pos):
     mask = 1 << pos
     return (x & mask) >> pos
 
+#def write_bit(x, pos):
+    # n = read_bit(x, pos)
+    # if n == 0:
+    #     return clear_bit(x, pos)
+    # else:
+    #     return set_bit(x, pos)
+def update_bit(num, pos, bit):
+    mask = ~(1 << pos)
+    return (num & mask) | (bit << pos)   
+    # mask = 1 << pos
+    # return (x & mask) >> pos
+
 def applyMaskAndWrite(mask, address, val):
     # OK, and handles both 1 and 0 address bits now. 
     newaddress = address
@@ -62,8 +74,9 @@ def applyMaskAndWrite(mask, address, val):
     #     print(f"binary = {incr:036b}")
     #     incr += 1
     #     print(f"newaddress={newaddress},  val={val}")
-    #for z in range(3):  # 4 = 100 binary
-    #    print(f"z={z}, {read_bit(4, z)}")
+    for z in range(3):  # 4 = 100 binary
+        print(f"z={z}, read={read_bit(4, z)}")
+        print(f"z={z}, write={update_bit(5, z, 1)}")
 
     #TODO:increment mask integer number by 1 in outer loop. from 0 up to 2^num of X's
     # loop read bits spreading the bits using float index array over the X's in mask. up to float_cnt.
@@ -77,7 +90,7 @@ def applyMaskAndWrite(mask, address, val):
             bitval = read_bit(incr, index)
             print(f"incr={incr}, index={index}, bitval={bitval}")
             # use floating index2 for OUTPUT, could use zip.
-            modnewAddr = set_bit(newaddress, floating[index])
+            modnewAddr = update_bit(newaddress, floating[index], bitval)
             print(f"mask={mask}, modnewAddr={modnewAddr}, newaddress={newaddress},  val={val},  bin={bin(modnewAddr)}")
             mem[modnewAddr] = val
     
