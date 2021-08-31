@@ -1,0 +1,20 @@
+Josephs-MBP:advent2020 family$ python3 14b.py | more
+maxrows=4
+
+found mask = 000000000000000000000000000000X1001X
+address = 42 val=100
+address binary = 101010
+mask1 binary = 10010
+mask1=000000000000000000000000000000010010, mask1_int=18, newaddress=111010
+newaddress=58, val=100, bin=0b111010
+
+found mask = 00000000000000000000000000000000X0XX
+address = 26 val=1
+address binary = 11010
+mask1 binary = 0
+mask1=000000000000000000000000000000000000, mask1_int=0, newaddress=11010
+newaddress=26, val=1, bin=0b11010
+
+max_mem = 58
+Sum = 101
+Josephs-MBP:advent2020 family$ 
