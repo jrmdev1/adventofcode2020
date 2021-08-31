@@ -8,7 +8,8 @@ import re
 #f'0b{number:08b}'
 
 filename = "data14_short.txt"
-mem = [0] * 3097224   #TODO: this will not be enough now due to X's
+maxmemalloc = 65536
+mem = [0] * maxmemalloc   #TODO: this will not be enough now due to X's
                       # 36-bit 68719476736 max
 
 # address: 000000000000000000000000000000101010  (decimal 42)
@@ -58,9 +59,9 @@ def applyMaskAndWrite(mask, address, val):
     floating = []
     mask_reverse = mask[::-1]
     for ci,char in enumerate(mask_reverse):
-        print(f"char={char}")
+        #print(f"char={char}")
         if char=="X":
-            print(f"ci={ci}")
+            #print(f"ci={ci}")
             floating.append(ci)
             #2**ci
     float_cnt = mask_reverse.count("X")
@@ -74,9 +75,9 @@ def applyMaskAndWrite(mask, address, val):
     #     print(f"binary = {incr:036b}")
     #     incr += 1
     #     print(f"newaddress={newaddress},  val={val}")
-    for z in range(3):  # 4 = 100 binary
-        print(f"z={z}, read={read_bit(4, z)}")
-        print(f"z={z}, write={update_bit(5, z, 1)}")
+    # for z in range(3):  # 4 = 100 binary
+    #     print(f"z={z}, write={update_bit(5, z, 1)}")
+    #     print(f"z={z}, read={read_bit(5, z)}")
 
     #TODO:increment mask integer number by 1 in outer loop. from 0 up to 2^num of X's
     # loop read bits spreading the bits using float index array over the X's in mask. up to float_cnt.
@@ -85,7 +86,7 @@ def applyMaskAndWrite(mask, address, val):
     incr = 0
     print(f"2**float_cnt={2**float_cnt}")
     for incr in range(2**float_cnt):
-        for index in range(float_cnt):
+        for index in range(float_cnt-1):
         #for index2 in floating:      #NOT floating index2! need input count!
             bitval = read_bit(incr, index)
             print(f"incr={incr}, index={index}, bitval={bitval}")
@@ -147,7 +148,7 @@ for line in a_list:
         print(f"ERROR {line}")
 
 sum = 0
-for i in range(3097224):  #TODO: this will not be enough now due to X's
+for i in range(maxmemalloc):  #TODO: this will not be enough now due to X's
     sum += mem[i]
 
 print(f"max_mem = {max_mem}")
