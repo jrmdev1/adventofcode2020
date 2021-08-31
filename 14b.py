@@ -49,11 +49,20 @@ def applyMaskAndWrite(mask, address, val):
     newaddress = address
     mask1 = mask.replace("X", "0")
     mask1_int = int(mask1, 2)
-    #print(f"mask1 binary = {mask1_int:b}")
+    print(f"mask1 binary = {mask1_int:b}")
     newaddress |= mask1_int 
-    #print(f"mask1={mask1}, mask1_int={mask1_int}, newaddress={newaddress}")
+    print(f"mask1={mask1}, mask1_int={mask1_int}, newaddress={newaddress}")
+
+    # now if was X in mask, write 0 to newaddr for now (will change as cycled through later)
+    mask0 =  mask.replace("1", "0")
+    mask0 = mask0.replace("X", "1")
+    mask0_int = int(mask0, 2)
+    #print(f"mask0={mask0}, mask0_int={mask0_int}")
+    newaddress &= ~mask0_int
+    print(f"mask0={mask0}, mask0_int={mask0_int}, newaddress={newaddress}")
+
     #WRITE first one 
-    mem[newaddress] = val  #TODO: only writing one val for now
+    #mem[newaddress] = val  #TODO: only writing one val for now
     print(f"newaddress={newaddress}, val={val}, bin={bin(newaddress)}")
     
     floating = []

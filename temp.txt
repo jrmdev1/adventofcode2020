@@ -1,0 +1,12 @@
+found mask = 000000000000000000000000000000X1001X
+address = 42 val=100
+address binary = 101010
+mask1 binary = 10010
+mask1=000000000000000000000000000000010010, mask1_int=18, newaddress=111010
+newaddress=58, val=100, bin=0b111010
+
+
+mask =        X1001X
+address bin = 101010
+mask1 bin =   010010
+newaddress =  111010
