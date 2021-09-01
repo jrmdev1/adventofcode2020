@@ -1,0 +1,57 @@
+newaddress=26, val=100, bin=0b11010
+float_cnt=2 floating=[0, 5]
+2**float_cnt=4
+mask=000000000000000000000000000000X1001X,  (newaddress=26)
+incr=0, index=0, bitval=0
+modnewAddr=26, val=100, bin=0b11010
+incr=0, index=1, bitval=0
+modnewAddr=26, val=100, bin=0b11010
+incr=1, index=0, bitval=1
+modnewAddr=27, val=100, bin=0b11011
+incr=1, index=1, bitval=0
+modnewAddr=26, val=100, bin=0b11010
+incr=2, index=0, bitval=0
+modnewAddr=26, val=100, bin=0b11010
+incr=2, index=1, bitval=1
+modnewAddr=58, val=100, bin=0b111010
+incr=3, index=0, bitval=1
+modnewAddr=27, val=100, bin=0b11011
+incr=3, index=1, bitval=1
+modnewAddr=58, val=100, bin=0b111010
+
+newaddress=26, val=100, bin=0b 11010
+                              X1001X
+incr=0, index=0, bitval=0
+modnewAddr=26, val=100, bin=0b 11010    0 0
+incr=0, index=1, bitval=0
+modnewAddr=26, val=100, bin=0b 11010    NO
+incr=1, index=0, bitval=1
+modnewAddr=27, val=100, bin=0b 11011    0 1
+incr=1, index=1, bitval=0
+modnewAddr=26, val=100, bin=0b 11010    NO
+incr=2, index=0, bitval=0
+modnewAddr=26, val=100, bin=0b 11010    1 0
+incr=2, index=1, bitval=1
+modnewAddr=58, val=100, bin=0b111010    NO
+incr=3, index=0, bitval=1
+modnewAddr=27, val=100, bin=0b 11011    1 1   <<<<--- this one fails to read bit 0
+incr=3, index=1, bitval=1
+modnewAddr=58, val=100, bin=0b111010    NO
+
+three indexes: incr bin 00 to 11, digit bit 0 to 3, 
+float_cnt=2 floating=[0, 5]
+2**float_cnt=4
+mask=00000000000000000000000000X1001X,  (newaddress=26)
+incr=0, index=0, bitval=0
+incr=0, index=1, bitval=0
+modnewAddr=26, val=100, bin=0b  11010
+incr=1, index=0, bitval=1
+incr=1, index=1, bitval=0
+modnewAddr=26, val=100, bin=0b  11010  fail?
+incr=2, index=0, bitval=0
+incr=2, index=1, bitval=1
+modnewAddr=58, val=100, bin=0b 111010
+incr=3, index=0, bitval=1
+incr=3, index=1, bitval=1
+modnewAddr=58, val=100, bin=0b 111010  fail
+

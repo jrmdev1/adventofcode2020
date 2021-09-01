@@ -88,37 +88,23 @@ def applyMaskAndWrite(mask, address, val):
     #     print(f"z={z}, write={update_bit(5, z, 1)}")
     #     print(f"z={z}, read={read_bit(5, z)}")
 
-    #TODO:increment mask integer number by 1 in outer loop. from 0 up to 2^num of X's
+    #increment mask integer number by 1 in outer loop. from 0 up to 2^num of X's
     # loop read bits spreading the bits using float index array over the X's in mask. up to float_cnt.
     # (using set and clear bit)
     # mask over the range of addresses and write to mem.
     incr = 0
     print(f"2**float_cnt={2**float_cnt}")
-    for incr in range(2**float_cnt):
-        for index in range(float_cnt-1):
-        #for index2 in floating:      #NOT floating index2! need input count!
+    print(f"mask={mask},  (newaddress={newaddress})")
+    index = 0  # which float index to write to.
+    for incr in range(2**float_cnt):   # 4,
+        modnewAddr = newaddress
+        for index in range(float_cnt): # 2,
             bitval = read_bit(incr, index)
             print(f"incr={incr}, index={index}, bitval={bitval}")
-            # use floating index2 for OUTPUT, could use zip.
-            modnewAddr = update_bit(newaddress, floating[index], bitval)
-            print(f"mask={mask}, modnewAddr={modnewAddr}, newaddress={newaddress},  val={val},  bin={bin(modnewAddr)}")
-            mem[modnewAddr] = val
-    
-    #TODO: Need to increment each X place, as in successive numbers
-    # but spread over the X places.
-    # consider whether makes sense to keep adding to an ongoing mask.
-
-    #TODO: change to handle X now
-    # LOOP through ALL X combinations and write
-    #mask0 = mask.replace("X", "1")
-    #mask0_int = ~(int(mask0, 2))
-    #print(f"mask0 binary = {mask0_int:b}")
-    #print(f"mask0={mask0}, mask0_int={mask0_int}, newaddress={newaddress}")
-    
-    #newaddress &= ~mask0_int
-    # loop!
-    #mem[newaddress] = val  #TODO: only writing one val for now
-
+            # use floating index for OUTPUT, could use zip.
+            modnewAddr = update_bit(modnewAddr, floating[index], bitval)
+        print(f"modnewAddr={modnewAddr}, val={val}, bin={bin(modnewAddr)}")
+        mem[modnewAddr] = val
     #print(f"mask={mask}, address={address}, newaddress={newaddress},  val={val}")
     return newaddress
 
