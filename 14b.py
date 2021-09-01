@@ -11,6 +11,7 @@ filename = "data14_short.txt"
 maxmemalloc = 65536
 mem = [0] * maxmemalloc   #TODO: this will not be enough now due to X's
                           # 36-bit 68719476736 max
+max_mem = 0
 
 # address: 000000000000000000000000000000101010  (decimal 42)
 # mask:    000000000000000000000000000000X1001X
@@ -45,6 +46,7 @@ def update_bit(num, pos, bit):
     # return (x & mask) >> pos
 
 def applyMaskAndWrite(mask, address, val):
+    global max_mem
     # handles both 1 and 0 address bits now. 
     newaddress = address
     mask1 = mask.replace("X", "0")
@@ -100,7 +102,11 @@ def applyMaskAndWrite(mask, address, val):
             modnewAddr = update_bit(modnewAddr, floating[index], bitval)
         print(f"modnewAddr={modnewAddr}, val={val}, bin={bin(modnewAddr)}")
         mem[modnewAddr] = val
-    return newaddress
+
+        if modnewAddr > max_mem:   #TODO: not enough anymore
+            max_mem = modnewAddr
+
+    #return newaddress
 
 file = open(filename)
 filestr = file.read()
@@ -110,7 +116,7 @@ print(a_list)
 print(f"maxrows={maxrows}")
 
 mask = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-max_mem = 0
+#max_mem = 0
 
 for line in a_list:
     if line[:7] == "mask = ":
@@ -125,10 +131,8 @@ for line in a_list:
         address = int(address_list_str[0])
         val = int(temp[1])
         print(f"address = {address} val={val}")
-        newaddr = applyMaskAndWrite(mask, address, val)
+        applyMaskAndWrite(mask, address, val)
 
-        if newaddr > max_mem:   #TODO: not enough anymore
-            max_mem = newaddr
     else:
         print(f"ERROR {line}")
 
