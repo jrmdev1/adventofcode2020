@@ -1,5 +1,5 @@
 #Advent of code 2020
-# 08/21/21 day 14a
+# 08/21/21 day 14b
 #import copy
 import sys
 import re
@@ -10,7 +10,7 @@ import re
 filename = "data14_short.txt"
 maxmemalloc = 65536
 mem = [0] * maxmemalloc   #TODO: this will not be enough now due to X's
-                      # 36-bit 68719476736 max
+                          # 36-bit 68719476736 max
 
 # address: 000000000000000000000000000000101010  (decimal 42)
 # mask:    000000000000000000000000000000X1001X
@@ -45,7 +45,7 @@ def update_bit(num, pos, bit):
     # return (x & mask) >> pos
 
 def applyMaskAndWrite(mask, address, val):
-    # OK, and handles both 1 and 0 address bits now. 
+    # handles both 1 and 0 address bits now. 
     newaddress = address
     mask1 = mask.replace("X", "0")
     mask1_int = int(mask1, 2)
@@ -60,9 +60,6 @@ def applyMaskAndWrite(mask, address, val):
     #print(f"mask0={mask0}, mask0_int={mask0_int}")
     newaddress &= ~mask0_int
     print(f"mask0={mask0}, mask0_int={mask0_int}, newaddress={newaddress}")
-
-    #WRITE first one 
-    #mem[newaddress] = val  #TODO: only writing one val for now
     print(f"newaddress={newaddress}, val={val}, bin={bin(newaddress)}")
     
     floating = []
@@ -72,7 +69,6 @@ def applyMaskAndWrite(mask, address, val):
         if char=="X":
             #print(f"ci={ci}")
             floating.append(ci)
-            #2**ci
     float_cnt = mask_reverse.count("X")
 
     print(f"float_cnt={float_cnt} floating={floating}")
@@ -88,24 +84,22 @@ def applyMaskAndWrite(mask, address, val):
     #     print(f"z={z}, write={update_bit(5, z, 1)}")
     #     print(f"z={z}, read={read_bit(5, z)}")
 
-    #increment mask integer number by 1 in outer loop. from 0 up to 2^num of X's
+    # increment mask integer number by 1 in outer loop. from 0 up to 2**num of X's
     # loop read bits spreading the bits using float index array over the X's in mask. up to float_cnt.
-    # (using set and clear bit)
     # mask over the range of addresses and write to mem.
     incr = 0
     print(f"2**float_cnt={2**float_cnt}")
     print(f"mask={mask},  (newaddress={newaddress})")
-    index = 0  # which float index to write to.
+    index = 0  # which float index to read from, then map to float bit to write to
     for incr in range(2**float_cnt):   # 4,
         modnewAddr = newaddress
         for index in range(float_cnt): # 2,
             bitval = read_bit(incr, index)
             print(f"incr={incr}, index={index}, bitval={bitval}")
-            # use floating index for OUTPUT, could use zip.
+            # use floating index for OUTPUT, (could use zip.)
             modnewAddr = update_bit(modnewAddr, floating[index], bitval)
         print(f"modnewAddr={modnewAddr}, val={val}, bin={bin(modnewAddr)}")
         mem[modnewAddr] = val
-    #print(f"mask={mask}, address={address}, newaddress={newaddress},  val={val}")
     return newaddress
 
 file = open(filename)
@@ -131,13 +125,9 @@ for line in a_list:
         address = int(address_list_str[0])
         val = int(temp[1])
         print(f"address = {address} val={val}")
-        #newaddress = applyMask(mask, address)
         newaddr = applyMaskAndWrite(mask, address, val)
-        
-        #mem[address] = newaddress
-        #mem[newaddr] = val  #TODO: DONT write here now...
 
-        if newaddr > max_mem:
+        if newaddr > max_mem:   #TODO: not enough anymore
             max_mem = newaddr
     else:
         print(f"ERROR {line}")
