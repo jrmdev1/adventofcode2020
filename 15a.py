@@ -10,7 +10,7 @@ filestr = file.read()
 a_list = filestr.split("\n")
 maxrows = len(a_list)
 print(a_list)
-print(f"maxrows={maxrows}")
-b_list = a_list[0].split(",")
-print(b_list)
+#print(f"maxrows={maxrows}")
 
+b_list = [int(i) for i in a_list[0].split(",")]
+print(b_list)
