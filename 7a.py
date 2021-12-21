@@ -1,37 +1,96 @@
-#Advent of code 2021
-# 12/20/21 day 7a
-# Joe McFarland
-# import sys
-# import re
-# import copy
+#Advent of code
+# 01/21/21 (start 12/14/2020) day7 7a
+import re
+# pip3 install treelib
+from treelib import Node, Tree
 
 filename = "data7.txt"
-
 file = open(filename)
 filestr = file.read()
 a_list = filestr.split("\n")
-maxrows = len(a_list)
+maxindex = len(a_list)
 print(a_list)
-#maxcols = len(a_list[0])
-a_str = a_list[0].split(",")
-mylist = [int(elem) for elem in a_str]
+print(f"maxindex={maxindex}, maxcolumns={len(a_list[0])}")
 
-maxpos = max(mylist)
-print(f"maxpos={maxpos}")
+#muted yellow bags contain 2 shiny gold bags, 9 faded blue bags.
+#plaid coral bags contain 2 pale green bags, 2 faded tomato bags, 2 dark salmon bags, 1 vibrant magenta bag.
+#faded blue bags contain no other bags.
 
-print(f"{mylist}")
+# parse the file (try regex)
+# make list of lists, to show connections.
+# go backwards from the shiny gold bags.
 
-lowest_fuel = 10000000
-#lowest_pos = maxpos
-for hpos in range(1,maxpos+1):
-    per_pos_fuel = 0
-    for crab_pos in mylist:
-        fuelcost = max(crab_pos, hpos) - min(crab_pos, hpos)
-        #print(f"hpos: {hpos}, crab_pos: {crab_pos}, fuelcost: {fuelcost}")
-        per_pos_fuel += fuelcost
-    if per_pos_fuel < lowest_fuel:
-        lowest_fuel = per_pos_fuel
-        lowest_pos = hpos
-        print(f"updated low(pos,fuel): {lowest_pos}, {lowest_fuel}")
-    #print(f"hpos {hpos}, per_pos_fuel {per_pos_fuel}")
-print(f"lowest_pos = {lowest_pos}, lowest_fuel = {lowest_fuel}")
+# can make an initial test case parsing and finding the top level holders of shiny gold.
+tree = Tree()
+tree.create_node("root", "root")    # create root, (tag, identifier)
+#tree.create_node("noparent", "noparent",parent="root")
+#tree.create_node("shiny gold", "shiny gold", parent="root")    # create root, (tag, identifier)
+tree.show()
+
+for line in a_list:
+    # TODO: parse the comma(s) afterwards for other groups!
+    m = re.match(r"(\w+ \w+) (?:bags) (?:contain) (\w+) (\w+ \w+) (?:bags*)", line)
+    # grpall = m.group(0)
+    # print(f"{grpall}")  # string
+    print(f"{m.groups()}")    # string in groups, indexed 1 and up.
+    #print(f"len={len(grpall)}, span={m.span()}")
+    par = m.group(1)  # first entry
+    child = m.group(3)
+    child_list = []
+    child_list.append(child)
+    cnt_other = line.count(',')
+    print(f"cnt_other={cnt_other}")
+    if cnt_other > 0:
+        remain_list = line.split(", ")
+        remain_list.pop(0)    # drop already processed child and parent string entry
+        print(f"remain_list={remain_list}")
+        for i in range(0, cnt_other):
+            m = re.match(r"(\w+) (\w+ \w+) (?:bags*)", remain_list[i])
+            num = m.group(1)
+            child = m.group(2)
+            print(f"child={child}")
+            child_list.append(child)
+
+    # if new, create parent node (parent of root temporarily.)
+    # if not new, use it.
+    # then similar for children.
+    if not tree.contains(par):
+        # new so create the parent (and make its parent root temporarily OR leave it as None for now???)
+        tree.create_node(par, par, parent="root")
+    for child in child_list:
+        if not tree.contains(child):
+            tree.create_node(child, child, parent=par)
+        else:
+            # reparent the child, since child already exists (assert that parent was previously root)
+            #tree.create_node(child, child, parent="root")
+            #node = tree.get_node(child)
+            prev_par = tree.parent(child)
+            print(f"!!! previous parent = {prev_par} !!!")
+            tree.move_node(child, par)
+    
+    # for child in child_list:
+    #     if tree.contains(par):
+    #         tree.create_node(child, child, parent=par)
+    #     else:
+    #         # add to root until we can find its true parent (later)
+    #         tree.create_node(child, child, parent="root")
+    
+    tree.show()
+
+    # count = 0
+    # for c in m.groups():
+    #     #print(f"{c}")
+    #     count = count +1
+    # print(f"count = {count}")
+
+tree.show()
+
+
+# the group is as shown afterwards: (child, count, THEN parent)
+# shiny gold is the parent.
+# vibrant plum bags contain 5 faded blue bag, 6 dotted black bags.
+# ('vibrant plum', '5', 'faded blue')
+# >>> import re      # split, search, match
+# >>> m = re.search('(?<=abc)def', 'abcdef')
+# >>> m.group(0)
+#m = re.match(r"(\w+) (\w+)", "Isaac Newton, physicist")
