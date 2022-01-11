@@ -1,41 +1,41 @@
-#Advent of code 2021
-# 1/11/22 day 8a
-# Joe McFarland
-# import sys
-# import re
-# import copy
+#Advent of code
+# 06/15/21 day8 8a
+#import re
+
 filename = "data8.txt"
-
-def isMatch(word):
-    # match word:
-    #     case "fg":
-    match len(word):
-        case 2: # num 1
-            return True
-        case 4: # num 4
-            return True
-        case 3: # num 7
-            return True
-        case 7: # num 8
-            return True
-    return False
-            
-
 file = open(filename)
 filestr = file.read()
 a_list = filestr.split("\n")
-maxrows = len(a_list)
-#print(a_list)
-#maxcols = len(a_list[0])
-count = 0
-for line in a_list:
-    a_str = line.split(" | ")
-    sig_str = a_str[0]
-    out_str = a_str[1]
-    print(f"{sig_str}, {out_str}")
-    out_list = out_str.split()
-    for word in out_list:
-        if isMatch(word):
-            count += 1
-print(f"count={count}")
+maxindex = len(a_list)
+print(a_list)
+print(f"maxindex={maxindex}, maxcolumns={len(a_list[0])}")
+
+acc = 0
+pc = 0
+hasrun_list = [0] * maxindex
+
+while pc >= 0:
+    if hasrun_list[pc] != 0:
+        print(f"line already run, exiting pc = {pc}, acc = {acc}")
+        break
+    hasrun_list[pc] = 1
+    line = a_list[pc]
+    oper, arg = line.split(" ")
+    print(f"pc = {pc}, oper = {oper}, arg = {arg}")
+    arg_int = int(arg)
+    if oper == "nop":
+        print(f"nop exec")
+    elif oper == "acc":
+        acc += arg_int
+        print(f"acc new = {acc}")
+    elif oper == "jmp":
+        pc += arg_int
+        print(f"jmp {arg_int}, new pc = {pc}")
+        continue        # start processing at new pc, dont increment
+    else:
+        print(f"ERROR: syntax {line}")
+        break
+    pc += 1
+        
+print(f"final pc = {pc}, acc = {acc}")
 
